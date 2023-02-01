@@ -1,16 +1,23 @@
 import React from 'react'
-import { MapContainer, TileLayer, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer} from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import { LocationMarker } from './LocationMarker'
 
-function Map() {
+function MapView() {
+
+  const position = [10.693, -71.634]
+
   return (
-    <div className='Map'>
-        <MapContainer center={[10.656, -71.612]} zoom={6} scrollWheelZoom={true}>
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-        </MapContainer>
+    <div className='MapView'>
+      <MapContainer center={position} zoom={15} >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <LocationMarker />
+      </MapContainer>
     </div>
   )
 }
 
-export {Map}
+export { MapView }
