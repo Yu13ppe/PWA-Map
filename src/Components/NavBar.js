@@ -38,7 +38,7 @@ async function downloadApp() {
 
   return (
     <div className='NavBar'>
-        <h1 className='Logo'>NavBar</h1>
+        <h1 className='Logo'>InfoTPM</h1>
         <ul className='buttons'>
             <li className='btn home-btn'>Home</li>
             <li className='btn about-btn'>About</li>
