@@ -1,13 +1,13 @@
-import {MapView} from '../Pages/Map';
-import {Stops} from '../Pages/Stops';
+import { MapView } from '../Pages/Map';
+import { Account } from '../Pages/Account';
 import { Lines } from '../Pages/Lines';
 
 
 const routes = [
     {
-      title: 'Stops',
-      path: '/stops',
-      component: Stops,
+      title: 'Account',
+      path: '/Account',
+      component: Account,
     },
     {
       title: 'Lines',
