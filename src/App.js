@@ -1,12 +1,23 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom'
 import { NavBar } from './Components/NavBar';
-import {MapView} from './Components/Map';
+import routes from './Config/routes';
 
 function App() {
   return (
     <React.Fragment>
-      <NavBar />
-      <MapView />
+        <Router>
+        <NavBar/>
+        <Switch>
+          {routes.map((route) => (
+            <Route key={route.path} path={route.path} component={route.component}/>
+          ))}
+        </Switch>
+      </Router>
     </React.Fragment>
   );
 }

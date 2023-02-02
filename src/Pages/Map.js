@@ -1,7 +1,7 @@
 import React from 'react'
 import { MapContainer, TileLayer} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { LocationMarker } from './LocationMarker'
+import { LocationMarker } from '../Components/LocationMarker'
 
 function MapView() {
 

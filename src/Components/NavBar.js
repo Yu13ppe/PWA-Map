@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react'
+import { Link } from 'react-router-dom'
+import routes from '../Config/routes'
 
 function NavBar() {
 
@@ -40,9 +42,11 @@ async function downloadApp() {
     <div className='NavBar'>
         <h1 className='Logo'>InfoTPM</h1>
         <ul className='buttons'>
-            <li className='btn home-btn'>Home</li>
-            <li className='btn about-btn'>About</li>
-            <li className='btn contact-btn'>Contact</li>
+        {routes.reverse().map((route) => (
+              <li>
+                  <Link className='btn' to={route.path}>{route.title}</Link>
+              </li>
+              ))}
             {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
         </ul>
     </div>
