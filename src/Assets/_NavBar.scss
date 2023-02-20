@@ -5,12 +5,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 999;
+    z-index: 1500;
     width: 100%;
     height: 60px;
+    min-width: 245px;
 
+    .burguer{
+        background-color: #ddd;
+    }
     
     .Logo{
         font-size: 1.5rem;
@@ -19,27 +23,53 @@
         text-decoration: none;
     }
 
-    .buttons{
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        list-style: none;
+    .Collapse{
+        background-color: #222;
+        margin-top: .6em;
+        width: 100vw;
 
-        .btn{
-            padding: 5px 10px;
-            border: 1px solid #fff;
-            border-radius: 5px;
-            text-decoration: none;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease-in-out;
-            cursor: pointer;
-
-            &:hover{
-                background-color: #fff;
-                color: #333;
+        .buttons{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            list-style: none;
+            padding: 1em;
+    
+            .btn{
+                padding: 5px 10px;
+                border: 1px solid #fff;
+                border-radius: 5px;
+                text-decoration: none;
+                color: #fff;
+                font-size: 1rem;
+                font-weight: 600;
+                transition: all 0.3s ease-in-out;
+                cursor: pointer;
+    
+                &:hover{
+                    background-color: #fff;
+                    color: #333;
+                }
             }
         }
     }
 }
+
+@media screen and (max-width: 300px) {
+    .Collapse{
+        display: flex;
+        background-color: #222;
+        margin-top: .6em;
+        width: 100vw;
+        flex-direction: column;
+
+        .buttons{
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+            padding: 1em;
+        }
+    }
+}
+

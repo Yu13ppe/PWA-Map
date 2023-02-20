@@ -28,11 +28,11 @@
     }
   ],
   "lang":"es",
-  "name":"PWA map-test",
+  "name":"Info TPM",
   "orientation":"portrait",
   "prefer_related_applications":false,
   "scope":"/",
-  "short_name":"PWA test",
+  "short_name":"InfoTPM",
   "start_url":"/",
   "theme_color":"#ffffff"
 }
