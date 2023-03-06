@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import {Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, CardTitle } from 'reactstrap';
+import { Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, CardTitle } from 'reactstrap';
 import { lineList } from '../Components/LineList';
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
 
 function Lines() {
     const [like, setLike] = useState(false);
@@ -15,8 +15,8 @@ function Lines() {
             <Row>
                 {
                     lineList.map(line => (
-                        <Col key={line.id}>
-                            <Card className="card">
+                        <Col className='col' key={line.id}>
+                            <Card className="cardLine">
                                 <CardHeader className="card-head">
                                     id {line.id}
                                 </CardHeader>
@@ -24,17 +24,28 @@ function Lines() {
                                     <CardTitle className="card-tittle">
                                         {line.name}
                                     </CardTitle>
+                                    <div className='lineButtons'>
+                                        <Button className="btn" type="button">
+                                            {
+                                                like ? (
+                                                    <FaHeart className="icon" onClick={handleLike} />
+                                                ) : (
+                                                    <FaRegHeart className="icon" onClick={handleLike} />
+                                                )
+                                            }
+                                        </Button>
+                                        <Button className="btn" type="button">
+                                            <FaRegCommentDots className="icon" />
+                                        </Button>
+                                    </div>
                                 </CardBody>
                                 <CardFooter className="card-footer">
-                                    <Button className="btn" type="button">
-                                        {
-                                            like ? (
-                                                <FaHeart className="icon" onClick={handleLike} />
-                                            ) : (
-                                                <FaRegHeart className="icon" onClick={handleLike} />
-                                            )
-                                        }
-                                    </Button>
+                                    <div className='Horario'>
+                                        Horario: {line.horario}
+                                    </div>
+                                    <div className='Pasaje'>
+                                        Pasaje: 10Bs.
+                                    </div>
                                 </CardFooter>
                             </Card>
                         </Col>
