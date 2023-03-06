@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, CardText, CardTitle } from 'reactstrap';
+import {Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, CardTitle } from 'reactstrap';
 import { lineList } from '../Components/LineList';
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 

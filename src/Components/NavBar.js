@@ -1,12 +1,13 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import routes from '../Config/routes'
+import routes from '../Config/Routes-Nav'
 import {
   Collapse,
   Navbar,
   NavbarToggler,
+  NavbarBrand,
   Nav,
-} from 'reactstrap';
+} from "reactstrap";
 
 
 function NavBar() {
@@ -49,38 +50,62 @@ function NavBar() {
   }
 
   return (
-    /*<div className='NavBar'>
-        <h1 className='Logo'>InfoTPM</h1>
-        <ul className='buttons'>
-        {routes.reverse().map((route) => (
-              <li>
-                  <Link className='btn' to={route.path}>{route.title}</Link>
-              </li>
-              ))}
-            {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
-            {isReadyBurguer && <li className='btn'>Download</li>}
-        </ul>
-    </div>*/
+    // <div>
+    //   <Navbar className='NavBar' light>
+    //     <h1 className='Logo'>InfoTPM</h1>
+    //     <NavbarToggler onClick={toggleNavbar} className="burguer" />
+    //     <Collapse className='Collapse' isOpen={!collapsed} navbar>
+    //       <Nav navbar>
+    //         <ul className='buttons'>
+    //           {routes.reverse().map((route) => (
+    //             <li>
+    //               <Link className='btn' to={route.path}>{route.title}</Link>
+    //             </li>
+    //             ))}
+    //           {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
+    //         </ul>
+    //       </Nav>
+    //     </Collapse>
+    //   </Navbar>
+    // </div>
 
     <div>
-      <Navbar className='NavBar' light>
-        <h1 className='Logo'>InfoTPM</h1>
-        <NavbarToggler onClick={toggleNavbar} className="burguer" />
-        <Collapse className='Collapse' isOpen={!collapsed} navbar>
+      <Navbar color="faded" light className="navbar">
+        <NavbarBrand href="/" className="me-auto">
+          <h1 className="title1">InfoTPM</h1>
+        </NavbarBrand>
+        <NavbarToggler onClick={toggleNavbar} className="botonDesplegable" />
+        <Collapse isOpen={!collapsed} navbar className="desplegable">
           <Nav navbar>
             <ul className='buttons'>
               {routes.reverse().map((route) => (
                 <li>
                   <Link className='btn' to={route.path}>{route.title}</Link>
+                  <div className='Divider'/>
                 </li>
-                ))}
+              ))}
               {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
             </ul>
+            {/* <NavItem >
+              <NavLink href="/" className='primeraOpcion'>Perfil</NavLink>
+            </NavItem>
+            <hr className="lineaRecta1"/>
+            <NavItem>
+              <NavLink href="/" >
+                <p className="opcion2">Lineas</p>
+              </NavLink>
+            </NavItem>
+            <hr className="lineaRecta2"/>
+            <NavItem>
+              <NavLink href="/" >
+                <p className="opcion3">Mapa</p>
+              </NavLink>
+            </NavItem> */}
           </Nav>
         </Collapse>
       </Navbar>
-  </div>
+    </div>
   )
 }
 
-export {NavBar}
+export { NavBar }
