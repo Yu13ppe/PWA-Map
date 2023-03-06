@@ -1,30 +1,91 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import { Label, Input } from 'reactstrap';
 
 function Register() {
   return (
     <div>
       <div className='containerInternoRegistro'>
-        <h1 className='titulo'>Registrar Usuario
-          <hr className='rayaTitulo' />
+        <h1 className='titulo'>
+          Registrar Usuario
+          <div className='rayaTitulo' />
         </h1>
         <div className='containerInformacionRegistro'>
-          <h2 className='nombreRegistro'>Nombre</h2>
-          <input className='inputNombreRegistro' placeholder='Nombre' />
-          <h2 className='apellidoRegistro'>Apellido</h2>
-          <input className='inputApellidoRegistro' placeholder='Apellido' />
-          <h2 className='correoRegistro'>Correo Electronico</h2>
-          <input className='inputCorreoRegistro' placeholder='Introduzca su correo' />
-          <h2 className='contrasenaRegistro'>contraseña</h2>
-          <input className='inputContrasenaRegistro' placeholder='Introduzca su contraseña' />
-          <h2 className='confirmarContrasenaRegistro'>Confirmar Contraseña</h2>
-          <input className='inputConfirmarContrasenaRegistro' placeholder='Confirme su contraseña' />
-          <h2 className='nacimientoRegistro'>Fecha de Nacimiento</h2>
-          <input className='inputDiaRegistro' placeholder='Dia' />
-          <input className='inputMesRegistro' placeholder='Mes' />
-          <input className='inputAnoRegistro' placeholder='Año' />
-          <Link to="/Account"><button className='botonVolverRegistro'>Volver</button></Link>
-          <button className='botonRegistrarseRegistro'>Registrarse</button>
+          <div className='Form'>
+            <div className='FormName'>
+              <div className='Nombre'>
+              <Label className='nombreRegistro' for="exampleName">
+                Nombre
+              </Label>
+              <Input
+                className='inputNombreRegistro'
+                type="text"
+                name="Name"
+                id="exampleName"
+                placeholder="Introduzca su Nombre"
+              />
+              </div>
+              <div className='Apellido'>
+              <Label className='apellidoRegistro' for="exampleApellido">
+                Apellido
+              </Label>
+              <Input
+                className='inputApellidoRegistro'
+                type="text"
+                name="Apellido"
+                id="exampleApellido"
+                placeholder="Introduzca su Apellido"
+              />
+              </div>
+            </div>
+            <Label className='correoRegistro' for="exampleEmail">
+              Email
+            </Label>
+            <Input
+              className='inputCorreoRegistro'
+              type="email"
+              name="email"
+              id="exampleEmail"
+              placeholder="Introduzca su correo"
+            />
+
+            <Label className='contrasenaRegistro' for="examplePassword">
+              Password
+            </Label>
+            <Input
+              className='inputContrasenaRegistro'
+              id="examplePassword"
+              name="password"
+              placeholder="password placeholder"
+              type="password"
+            />
+            <Label className='confirmarContrasenaRegistro' for="exampleConfirmPassword">
+              Password
+            </Label>
+            <Input
+              className='inputConfirmarContrasenaRegistro'
+              id="exampleConfirmPassword"
+              name="password"
+              placeholder="password placeholder"
+              type="password"
+            />
+
+            <Label className='nacimientoRegistro' for="exampleDate">
+              Fecha de Nacimiento
+            </Label>
+            <Input
+              className='inputDiaRegistro'
+              id="exampleDate"
+              name="date"
+              placeholder="date placeholder"
+              type="date"
+            />
+
+            <div className='RegisterButtons'>
+              <Link to="/Account"><button className='botonVolverRegistro btnRegister'>Volver</button></Link>
+              <button className='botonRegistrarseRegistro btnRegister'>Registrarse</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

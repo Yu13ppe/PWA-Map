@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
-//correoInicioSesion
+
 function Account() {
 
   return (
