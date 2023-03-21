@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, CardTitle } from 'reactstrap';
+import { Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, CardTitle, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
 import { lineList } from '../Components/LineList';
 import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
 
 function Perfil() {
   const [like, setLike] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
 
   const handleLike = () => {
     setLike(!like);
@@ -60,9 +63,29 @@ function Perfil() {
                             )
                           }
                         </Button>
-                        <Button className="btn" type="button">
+                        <Button className="btn" type="button" onClick={toggle}>
                           <FaRegCommentDots className="icon" />
                         </Button>
+                        <div className='Modal-comment'>
+                          <Modal isOpen={modal} centered toggle={toggle}>
+                            <ModalHeader toggle={toggle}>Comenta la Ruta</ModalHeader>
+                            <ModalBody>
+                              <Input
+                                type="textarea"
+                                placeholder="Realiza algún comentario que desees agregar acerca de esta ruta"
+                                rows={5}
+                              />
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button color="primary" onClick={toggle}>
+                                Envair Comentario
+                              </Button>{' '}
+                              <Button color="secondary" onClick={toggle}>
+                                Cancelar
+                              </Button>
+                            </ModalFooter>
+                          </Modal>
+                        </div>
                       </div>
                     </CardBody>
                     <CardFooter className="card-footer">
