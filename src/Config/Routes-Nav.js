@@ -1,20 +1,26 @@
 import { MapView } from '../Pages/Map';
 import { Account } from '../Pages/Account';
 import { Lines } from '../Pages/Lines';
+import { HelpSection } from '../Pages/help';
 
 const routes = [
     {
-      title: 'Account',
+      title: 'Cuenta',
       path: '/Account',
       component: Account,
     },
     {
-      title: 'Lines',
+      title: 'Lineas',
       path: '/Lines',
       component: Lines,
     },
     {
-      title: 'Map',
+      title: 'Ayuda',
+      path: '/HelpSection',
+      component: HelpSection,
+    },
+    {
+      title: 'Mapa',
       path: '/',
       component: MapView,
     },
