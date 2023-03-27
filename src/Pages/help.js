@@ -13,12 +13,12 @@ const data = {
         {
             title: "¿Cómo puedo cambiar mi contraseña?",
             content:
-                "Para cambiar tu contraseña, ve a la sección de configuración de tu cuenta y selecciona la opción de cambio de contraseña. Deberás proporcionar tu contraseña actual y luego ingresar la nueva contraseña que deseas usar.",
+                "Para cambiar tu contraseña, ve a la sección de Olvidaste tu contraseña, indica el correo electronico y le indicara en su correo electronico los pasos para cambiar su contraseña.",
         },
         {
             title: "¿Cómo puedo contactar al equipo de soporte?",
             content:
-                "Puedes enviar un correo electrónico al equipo de soporte a support@example.com o utilizar el formulario de contacto en nuestra página de ayuda.",
+                "Puedes enviar un correo electrónico al equipo de soporte a infotpm3@gmail.com.",
         },
     ],
 };
