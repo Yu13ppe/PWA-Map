@@ -32,7 +32,7 @@ function Perfil() {
           Aqui se ingresara el correo Electronico
         </p>
         <p className='numeroUsuario'>
-          20 Años
+          21 Años
         </p>
       </div>
       <div className='containerBody'>

@@ -30,34 +30,6 @@ function Account() {
     { email: "jesusramirez@hotmail.com", password: "123456" },
     { email: "rubenurdaneta@gmail.com", password: "123456" },
   ];
-  // const pulsar = () => {
-  //   let email = document.getElementById("exampleEmail").value;
-  //   let expReg = /^(([^<>()[\]\\.,;:\s@”]+(\.[^<>()[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,3}))$/
-  //   let pass = document.getElementById("examplePassword").value;
-
-  //   if (expReg.test(email.value)) {
-  //     alert("Usted introdujo un correo no valido");
-  //   }
-
-  //   if (email === '' && pass === '') {
-  //     alert("Campos vacios");
-
-  //   } else if (email === '') {
-  //     alert("El campo de correo esta vacio");
-
-  //   } else if (pass === '') {
-  //     alert("El campo de Contaseña esta vacio");
-
-  //   } else if (email !== DB) {
-  //     alert("No se encontro el correo");
-
-  //   } else if (pass !== DBP) {
-  //     alert("Contraseña incorrecta");
-
-  //   } else {
-  //     alert("Usted se ha logueado correctamente");
-  //   }
-  // }
 
   return (
     <div className='fondo'>
