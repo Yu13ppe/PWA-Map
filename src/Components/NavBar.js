@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 
 
-function NavBar() {
+function NavBar(props) {
 
   const [isReadyForInstall, setIsReadyForInstall] = React.useState(false);
 
@@ -50,24 +50,6 @@ function NavBar() {
   }
 
   return (
-    // <div>
-    //   <Navbar className='NavBar' light>
-    //     <h1 className='Logo'>InfoTPM</h1>
-    //     <NavbarToggler onClick={toggleNavbar} className="burguer" />
-    //     <Collapse className='Collapse' isOpen={!collapsed} navbar>
-    //       <Nav navbar>
-    //         <ul className='buttons'>
-    //           {routes.reverse().map((route) => (
-    //             <li>
-    //               <Link className='btn' to={route.path}>{route.title}</Link>
-    //             </li>
-    //             ))}
-    //           {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
-    //         </ul>
-    //       </Nav>
-    //     </Collapse>
-    //   </Navbar>
-    // </div>
 
     <div>
       <Navbar color="faded" light className="navbar">
@@ -78,29 +60,16 @@ function NavBar() {
         <Collapse isOpen={!collapsed} navbar className="desplegable">
           <Nav navbar>
             <ul className='buttons'>
-              {routes.reverse().map((route) => (
-                <li>
-                  <Link className='btn' to={route.path}>{route.title}</Link>
-                  <div className='Divider'/>
-                </li>
-              ))}
+              {routes.filter((route) => route.visibility === true) // Filtra solo las rutas con visibility = true
+                .reverse()
+                .map((route) => (
+                  <li key={route.path}>
+                    <Link className='btn' to={route.path}>{route.title}</Link>
+                    <div className='Divider' />
+                  </li>
+                ))}
               {isReadyForInstall && <li className='btn download-btn' onClick={downloadApp}>Download</li>}
             </ul>
-            {/* <NavItem >
-              <NavLink href="/" className='primeraOpcion'>Perfil</NavLink>
-            </NavItem>
-            <hr className="lineaRecta1"/>
-            <NavItem>
-              <NavLink href="/" >
-                <p className="opcion2">Lineas</p>
-              </NavLink>
-            </NavItem>
-            <hr className="lineaRecta2"/>
-            <NavItem>
-              <NavLink href="/" >
-                <p className="opcion3">Mapa</p>
-              </NavLink>
-            </NavItem> */}
           </Nav>
         </Collapse>
       </Navbar>

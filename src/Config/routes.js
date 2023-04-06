@@ -5,8 +5,26 @@ import { Perfil } from '../Pages/Perfil';
 import { Register } from '../Pages/Register';
 import { Recover } from '../Pages/Recover';
 import { HelpSection } from '../Pages/help';
+import { Admin } from '../Pages/Admin';
+import { VariableEditor } from '../Pages/VariableEditor';
+import { editUser } from '../Pages/editUser';
 
 const routes = [
+  {
+    title: 'editUser',
+    path: '/editUser',
+    component: editUser,
+  },
+  {
+    title: 'VariableEditor',
+    path: '/VariableEditor',
+    component: VariableEditor,
+  },
+  {
+    title: 'Admin',
+    path: '/Admin',
+    component: Admin,
+  },
   {
     title: 'HelpSection',
     path: '/HelpSection',
