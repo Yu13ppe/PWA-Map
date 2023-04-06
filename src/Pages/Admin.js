@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
 import { useHistory } from "react-router-dom";
-import routes from '../Config/Routes-Nav'
+// import routes from '../Config/Routes-Nav'
 
 function Admin() {
   const history = useHistory();
@@ -10,7 +10,7 @@ function Admin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [attemps, setAttemps] = useState(3);
-  const [visibility, setVisibility] = useState(routes);
+  // const [visibility, setVisibility] = useState(routes);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Previene el comportamiento predeterminado del formulario

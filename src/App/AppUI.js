@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import { NavBar } from '../Components/NavBar';
 import routes from '../Config/routes';
-import navRoutes from '../Config/Routes-Nav';
+// import navRoutes from '../Config/Routes-Nav';
 import { AppProvider } from '../Context/Context';
 
 function AppUI() {
