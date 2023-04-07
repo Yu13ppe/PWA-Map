@@ -36,7 +36,7 @@ function LinesEdit() {
         </h1>
         <div className='containerInternoUsers col'>
           <div className=" container">
-            <div className='row mx-4 '>
+            <div className='row m-5 '>
               <Input
                 type="text"
                 className="form-control"
@@ -53,8 +53,7 @@ function LinesEdit() {
           </div>
 
           <div className="row m-4 userTable">
-            <h3 className="mb-3">Linea</h3>
-            <Table bordered className='userTable'>
+            <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -63,6 +62,7 @@ function LinesEdit() {
                   <th>Longitud (Inicio)</th>
                   <th>Latitud (Llegada)</th>
                   <th>Longitud (Llegada)</th>
+                  <th>Funciones</th>
                 </tr>
               </thead>
               <tbody>

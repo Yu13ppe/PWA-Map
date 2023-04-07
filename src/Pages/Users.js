@@ -37,7 +37,7 @@ function Users() {
         </h1>
         <div className='containerInternoUsers col'>
           <div className=" container">
-            <div className='row mx-4 '>
+            <div className='row m-5 '>
               <Input
                 type="text"
                 className="form-control"
@@ -54,8 +54,7 @@ function Users() {
           </div>
 
           <div className="row m-4 userTable">
-            <h3 className="mb-3">Usuarios</h3>
-            <Table bordered className='userTable'>
+            <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
                   <th>ID</th>
@@ -64,6 +63,7 @@ function Users() {
                   <th>Correo</th>
                   <th>Fecha de Nacimiento</th>
                   <th>Cargo</th>
+                  <th>Funciones</th>
                 </tr>
               </thead>
               <tbody>

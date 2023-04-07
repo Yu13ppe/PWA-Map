@@ -36,7 +36,7 @@ function StopsEdit() {
         </h1>
         <div className='containerInternoUsers col'>
           <div className=" container">
-            <div className='row mx-4 '>
+            <div className='row m-5 '>
               <Input
                 type="text"
                 className="form-control"
@@ -53,14 +53,14 @@ function StopsEdit() {
           </div>
 
           <div className="row m-4 userTable">
-            <h3 className="mb-3">Parada</h3>
-            <Table bordered className='userTable'>
+            <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Nombre</th>
                   <th>Latitud</th>
                   <th>Longitud</th>
+                  <th>Funciones</th>
                 </tr>
               </thead>
               <tbody>
