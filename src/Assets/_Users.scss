@@ -1,0 +1,60 @@
+.containerUsers {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+    width: 80%;
+    margin: auto;
+    margin-top: 5em;
+    margin-bottom: 5em;
+    background-color: #13684B;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+    .tituloUser {
+        color: #FFFFFF;
+        margin-bottom: 1.3em;
+        text-align: center;
+        font-family: 'Segoe UI';
+        font-style: normal;
+        margin-top: 1em;
+
+        .rayaTitulo {
+            background-color: #E5C034;
+            border: 1px solid #E5C034;
+        }
+    }
+
+    .containerInternoUsers {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 70%;
+        width: 90%;
+        background-color: #0A4333;
+        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+        margin-bottom: 5em;
+
+        h3{
+            color: #FFFFFF;
+            margin-top: 1em;
+            margin-bottom: 1em;
+            text-align: center;
+            font-family: 'Segoe UI';
+            font-style: normal;
+        }
+
+        .btn{
+            margin: auto;
+            margin-top: 1em;
+        }
+
+        .userTable{
+            color: #FFFFFF;
+        }
+    }
+}
+
+// Path: src\Assets\_Recover.scss

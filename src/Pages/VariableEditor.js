@@ -9,42 +9,39 @@ const VariableEditor = () => {
         <div className="editor-container">
             <Accordion defaultValue="customization">
                 <Accordion.Item value="customization">
-                    <Accordion.Control className="rdw-faq-title">¿Cómo creo una cuenta?</Accordion.Control>
+                    <Accordion.Control className="rdw-faq-title">¿Deseas ver o editar la lista de Usuarios?</Accordion.Control>
                     <Accordion.Panel className="rdw-faq-content">
-                        Para crear una cuenta, ve a la página de registro y sigue los pasos que se indican. Deberás proporcionar tu dirección de correo electrónico y crear una contraseña segura.
+                        Proporcionamos la opcion del administrador de poder visualizar o editar la lista de usuarios y sus roles dentro del sistema.
                         <br/>
-                        <br/>
-                        <Link to={'/Perfil'}>
-                            <Button className="btn btn-primary btn-block" color="success">
-                                success
+                        <Link to={'/Users'} className="btns">
+                            <Button type="button" className="btn btn-primary btn-block" color="success">
+                                Acceder
                             </Button>
                         </Link>
                     </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="flexibility">
-                    <Accordion.Control className="rdw-faq-title">¿Cómo puedo cambiar mi contraseña?</Accordion.Control>
+                    <Accordion.Control className="rdw-faq-title">¿Deseas ver o editar la lista de Paradas?</Accordion.Control>
                     <Accordion.Panel className="rdw-faq-content">
-                        Para cambiar tu contraseña, ve a la sección de Olvidaste tu contraseña, indica el correo electronico y le indicara en su correo electronico los pasos para cambiar su contraseña.
+                    Proporcionamos la opcion del administrador de poder visualizar o editar la lista de Paradas dentro del sistema.
                         <br/>
-                        <br/>
-                        <Link to={'/Perfil'}>
-                            <Button className="btn btn-primary btn-block" color="success">
-                                success
+                        <Link to={'/StopsEdit'} className="btns">
+                            <Button type="button" className="btn btn-primary btn-block" color="success">
+                            Acceder
                             </Button>
                         </Link>
                     </Accordion.Panel>
                 </Accordion.Item>
 
                 <Accordion.Item value="focus-ring">
-                    <Accordion.Control className="rdw-faq-title">¿Cómo puedo contactar al equipo de soporte?</Accordion.Control>
+                    <Accordion.Control className="rdw-faq-title">¿Deseas ver o editar la lista de usuarios?</Accordion.Control>
                     <Accordion.Panel className="rdw-faq-content">
-                        Puedes enviar un correo electrónico al equipo de soporte a infotpm3@gmail.com.
+                    Proporcionamos la opcion del administrador de poder visualizar o editar la lista de Lineas dentro del sistema.
                         <br/>
-                        <br/>
-                        <Link to={'/Perfil'}>
-                            <Button className="btn btn-primary btn-block" color="success">
-                                success
+                        <Link to={'/LinesEdit'} className="btns">
+                            <Button type="button" className="btn btn-primary btn-block" color="success">
+                            Acceder
                             </Button>
                         </Link>
                     </Accordion.Panel>

@@ -7,13 +7,30 @@ import { Recover } from '../Pages/Recover';
 import { HelpSection } from '../Pages/help';
 import { Admin } from '../Pages/Admin';
 import { VariableEditor } from '../Pages/VariableEditor';
-import { editUser } from '../Pages/editUser';
+import { Users } from '../Pages/Users';
+import { StopsEdit } from '../Pages/StopsEdit';
+import { LinesEdit } from '../Pages/LinesEdit';
 
 const routes = [
   {
-    title: 'editUser',
-    path: '/editUser',
-    component: editUser,
+    title: 'LinesEdit',
+    path: '/LinesEdit',
+    component: LinesEdit,
+  },
+  {
+    title: 'StopsEdit',
+    path: '/StopsEdit',
+    component: StopsEdit,
+  },
+  {
+    title: 'Users',
+    path: '/Users',
+    component: Users,
+  },
+  {
+    title: 'Users',
+    path: '/Users',
+    component: Users,
   },
   {
     title: 'VariableEditor',
