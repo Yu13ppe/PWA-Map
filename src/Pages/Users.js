@@ -21,11 +21,9 @@ function editarUsuario() { }
 function Users() {
 
   const itemUsuario = dataGet("/Users");
-  // const [show, setShow] = useState(false);
   const [modal, setModal] = useState(false);
 
   // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
   const toggle = () => setModal(!modal);
 
   return (
@@ -169,7 +167,7 @@ function Users() {
                   type="radio"
                   id="Admin"
                   name="Admin"
-                  value="Admin"  
+                  value="Admin"
                 ></Input>
                 <label for="Admin">Admin</label>
               </div>

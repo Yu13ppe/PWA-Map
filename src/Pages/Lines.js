@@ -3,9 +3,28 @@ import { Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, Ca
 import { lineList } from '../Components/LineList';
 import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
 
+function NonStrictModal(props) {
+    return (
+        <Modal {...props}>
+            {props.children}
+        </Modal>
+    );
+}
+
 function Lines() {
     const [like, setLike] = useState(false);
     const [modal, setModal] = useState(false);
+    const [show, setShow] = useState(false);
+    const [selectedName, setSelectedName] = useState('');
+
+    const handleShow = (name) => {
+        setShow(true);
+        setSelectedName(name);
+    };
+
+    const handleClose = () => {
+        setShow(false);
+    };
 
     const toggle = () => setModal(!modal);
 
@@ -24,9 +43,18 @@ function Lines() {
                                     id {line.id}
                                 </CardHeader>
                                 <CardBody className="card-body">
-                                    <CardTitle className="card-tittle">
+
+                                    <CardTitle className="card-tittle" onClick={() => handleShow(line.name)}>
                                         {line.name}
                                     </CardTitle>
+
+                                    <NonStrictModal className='mt-5' isOpen={show} size='xl' centered toggle={handleClose}>
+                                        <ModalHeader toggle={handleClose}>Visualización {selectedName}</ModalHeader>
+                                        <ModalBody>
+                                            Contenido del modal
+                                        </ModalBody>
+                                    </NonStrictModal>
+
                                     <div className='lineButtons'>
                                         <Button className="btn" type="button">
                                             {
