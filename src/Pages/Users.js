@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 // import { DataGetFetching } from "../fetch/DataGetFetching";
 // import { DataPostFetching } from "../fetch/DataPostFetching";
-import {
+import { 
   //Button, Table,
-  Modal, ModalHeader, ModalBody,
-  //ModalFooter, 
-  Input
-} from 'reactstrap';
+   Modal, ModalHeader, ModalBody, 
+   //ModalFooter, 
+   Input } from 'reactstrap';
 
 // function agregarUsuario(nombre, apellido, correo, birthday, cargo) {
 //   console.log("1");
@@ -56,76 +55,61 @@ function Users() {
   //   });
   // };
 
-  const [nombre, setName] = useState('');
-  const [cedula, setLastname] = useState('');
-  const [telefono, setFdn] = useState('');
-  const [direccion, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [rol, setRol] = useState('');
-  // const [usuarios, setUsuarios] = useState([]);
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [fdn, setFdn] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rol, setRol] = useState('');
+  const [usuarios, setUsuarios] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
-  //     setUsuarios(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
+      setUsuarios(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async event => {
     event.preventDefault();
 
     try {
       if (selectedUser) {
-        await axios.put(
-          // `https://infotpm-backend-production.up.railway.app/Users/${selectedUser.id}`
-          `https://sysprop-production.up.railway.app/clientes/${selectedUser.id}`
-          , {
-          // name,
-          // lastname,
-          // email,
-          // password,
-          // fdn,
-          // rol,
-          nombre,
-          cedula,
-          telefono,
-          direccion
+        await axios.put(`https://infotpm-backend-production.up.railway.app/Users/${selectedUser.id}`, {
+          name,
+          lastname,
+          email,
+          password,
+          fdn,
+          rol
         });
 
         setSelectedUser(null);
       } else {
-        await axios.post(
-          //'https://infotpm-backend-production.up.railway.app/Users/create'
-          'https://sysprop-production.up.railway.app/clientes'
-          , {
-            // name,
-            // lastname,
-            // email,
-            // password,
-            // fdn,
-            // rol
-            nombre,
-            cedula,
-            telefono,
-            direccion
-          });
+        await axios.post('https://infotpm-backend-production.up.railway.app/Users/create', {
+          name,
+          lastname,
+          email,
+          password,
+          fdn,
+          rol
+        });
       }
 
       setName('');
       setLastname('');
       setFdn('');
       setEmail('');
-      // setPassword('');
-      // setRol('');
-
-      // fetchData();
+      setPassword('');
+      setRol('');
+      fetchData();
     } catch (error) {
       console.log(error);
     }
@@ -133,26 +117,17 @@ function Users() {
 
   const handleEdit = user => {
     setSelectedUser(user);
-    // setName(user.name);
-    // setLastname(user.lastname);
-    // setFdn(user.fdn);
-    // setEmail(user.email);
-    // setPassword(user.password);
-    // setRol(user.rol);
-    setName(user.nombre);
-    setLastname(user.cedula);
-    setFdn(user.telefono);
-    setEmail(user.direccion);
-    
+    setName(user.name);
+    setLastname(user.lastname);
+    setFdn(user.fdn);
+    setEmail(user.email);
+    setPassword(user.password);
+    setRol(user.rol);
   };
 
   const handleDelete = async id => {
     try {
-      await axios.delete(
-        //`https://infotpm-backend-production.up.railway.app/Users/${id}`
-        //'https://infotpm-backend-production.up.railway.app/Users/create'
-        `https://sysprop-production.up.railway.app/clientes/${id}`
-        );
+      await axios.delete(`https://infotpm-backend-production.up.railway.app/Users/${id}`);
       // fetchData();
     } catch (error) {
       console.log(error);
@@ -327,60 +302,43 @@ function Users() {
             <form onSubmit={handleSubmit}>
               <label>
                 Nombre:
-                <input type="text" 
-                // value={name} 
-                onChange={event => setName(event.target.value)} />
+                <input type="text" value={name} onChange={event => setName(event.target.value)} />
               </label>
               <label>
                 Apellido:
-                <input type="text" 
-                // value={lastname} 
-                onChange={event => setLastname(event.target.value)} />
+                <input type="text" value={lastname} onChange={event => setLastname(event.target.value)} />
               </label>
               <label>
                 Edad:
-                <input type="text" 
-                // value={fdn} 
-                onChange={event => setFdn(event.target.value)} />
+                <input type="text" value={fdn} onChange={event => setFdn(event.target.value)} />
               </label>
               <label>
                 Email:
-                <input type="text" 
-                // value={email} 
-                onChange={event => setEmail(event.target.value)} />
+                <input type="text" value={email} onChange={event => setEmail(event.target.value)} />
               </label>
-              {/* <label>
+              <label>
                 Password:
-                <input type="text" 
-                // value={password} 
-                onChange={event => setPassword(event.target.value)} />
-              </label> */}
-              {/* <label>
+                <input type="text" value={password} onChange={event => setPassword(event.target.value)} />
+              </label>
+              <label>
                 rol:
-                <input type="text" 
-                // value={rol} 
-                onChange={event => setRol(event.target.value)} />
-              </label> */}
+                <input type="text" value={rol} onChange={event => setRol(event.target.value)} />
+              </label>
               <button type="submit">Guardar</button>
             </form>
             <ul>
-              {/* {usuarios.map(user => (
-                <li 
-                key={user.id}>
-                  {/* {user.nombre} 
+              {usuarios.map(user => (
+                <li key={user.id}>
+                  {user.nombre} 
                   {user.lastname} 
                   ({user.fdn})
                   {user.email}
                   {user.password}
-                  {user.rol} */}
-                  {/* {user.nombre}
-                  {user.cedula}
-                  {user.telefono}
-                  {user.direccion}  */}
-                  <button onClick={() => handleEdit()}>Editar</button>
-                  <button onClick={() => handleDelete()}>Eliminar</button>
-                {/* </li>
-              ))} */}
+                  {user.rol}
+                  <button onClick={() => handleEdit(user)}>Editar</button>
+                  <button onClick={() => handleDelete(user.id)}>Eliminar</button>
+                </li>
+              ))}
             </ul>
           </div>
         </ModalBody>
