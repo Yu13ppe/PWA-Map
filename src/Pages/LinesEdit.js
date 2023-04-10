@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from "axios";
-import dataGet from "../fetch/DataFetching";
+import {DataGetFetching} from "../fetch/DataGetFetching";
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
 
 function agregarLinea(ruta, nombre, latitud, longitud) {
@@ -19,7 +19,7 @@ function eliminarLinea() { }
 function editarLinea() { }
 
 function LinesEdit() {
-  const itemLinea = dataGet("/LinesEdit");
+  const itemLinea = DataGetFetching("line");
   // const [show, setShow] = useState(false);
   const [modal, setModal] = useState(false);
 

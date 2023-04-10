@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from "axios";
-import dataGet from "../fetch/DataFetching";
+import {DataGetFetching} from "../fetch/DataGetFetching";
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
 
 function agregarParada(ruta, nombre, latitud, longitud) {
@@ -19,7 +19,7 @@ function eliminarParada() { }
 function editarParada() { }
 
 function StopsEdit() {
-  const itemParada = dataGet("/StopsEdit");
+  const itemParada = DataGetFetching("stops");
   // const [show, setShow] = useState(false);
   const [modal, setModal] = useState(false);
 
