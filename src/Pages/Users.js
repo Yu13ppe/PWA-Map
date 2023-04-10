@@ -85,7 +85,7 @@ function Users() {
       if (selectedUser) {
         await axios.put(
           // `https://infotpm-backend-production.up.railway.app/Users/${selectedUser.id}`
-          `http://sysprop-production.up.railway.app/clientes/${selectedUser.id}`
+          `https://sysprop-production.up.railway.app/clientes/${selectedUser.id}`
           , {
           // name,
           // lastname,
@@ -103,7 +103,7 @@ function Users() {
       } else {
         await axios.post(
           //'https://infotpm-backend-production.up.railway.app/Users/create'
-          'http://sysprop-production.up.railway.app/clientes'
+          'https://sysprop-production.up.railway.app/clientes'
           , {
             // name,
             // lastname,
@@ -143,6 +143,7 @@ function Users() {
     setLastname(user.cedula);
     setFdn(user.telefono);
     setEmail(user.direccion);
+    
   };
 
   const handleDelete = async id => {
@@ -150,7 +151,7 @@ function Users() {
       await axios.delete(
         //`https://infotpm-backend-production.up.railway.app/Users/${id}`
         //'https://infotpm-backend-production.up.railway.app/Users/create'
-        `http://sysprop-production.up.railway.app/clientes/${id}`
+        `https://sysprop-production.up.railway.app/clientes/${id}`
         );
       // fetchData();
     } catch (error) {
