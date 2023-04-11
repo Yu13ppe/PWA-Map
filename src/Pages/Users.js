@@ -364,15 +364,12 @@
 
 // export { Users }
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 // import { DataGetFetching } from "../fetch/DataGetFetching";
 // import { DataPostFetching } from "../fetch/DataPostFetching";
 import {
-  //Button, Table,
-  Modal, ModalHeader, ModalBody,
-  //ModalFooter, 
-  Input
+  Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input
 } from 'reactstrap';
 
 // function agregarUsuario(nombre, apellido, correo, birthday, cargo) {
@@ -422,27 +419,28 @@ function Users() {
   //   });
   // };
 
-  const [name, setName] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [fdn, setFdn] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rol, setRol] = useState('');
-  // const [usuarios, setUsuarios] = useState([]);
+  const [usu_name, setName] = useState('');
+  const [usu_lastName, setLastname] = useState('');
+  const [usu_birthday, setFdn] = useState('');
+  const [usu_email, setEmail] = useState('');
+  const [usu_password, setPassword] = useState('');
+  const [usu_rol, setRol] = useState('');
+  const [usuarios, setUsuarios] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
-  //     setUsuarios(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
+      setUsuarios(response.data);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -450,29 +448,27 @@ function Users() {
     try {
       if (selectedUser) {
         await axios.put(
-          `https://infotpm-backend-production.up.railway.app/Users/${selectedUser.id}`
-          //`https://sysprop-production.up.railway.app/clientes/${selectedUser.id}`
-          , {
-          name,
-          lastname,
-          email,
-          password,
-          fdn,
-          rol,
-        });
+          `https://infotpm-backend-production.up.railway.app/Users/${selectedUser.id}`,
+          {
+            usu_name,
+            usu_lastName,
+            usu_email,
+            usu_birthday,
+            usu_password,
+            usu_rol
+          });
 
         setSelectedUser(null);
       } else {
         await axios.post(
-          'https://infotpm-backend-production.up.railway.app/Users/create'
-          //'https://sysprop-production.up.railway.app/clientes'
-          , {
-            name,
-            lastname,
-            email,
-            password,
-            fdn,
-            rol
+          'https://infotpm-backend-production.up.railway.app/Users/create',
+          {
+            usu_name,
+            usu_lastName,
+            usu_email,
+            usu_birthday,
+            usu_password,
+            usu_rol
           });
       }
 
@@ -480,10 +476,9 @@ function Users() {
       setLastname('');
       setFdn('');
       setEmail('');
-      // setPassword('');
-      // setRol('');
-
-      // fetchData();
+      setPassword('');
+      setRol('');
+      fetchData();
     } catch (error) {
       console.log(error);
     }
@@ -491,36 +486,27 @@ function Users() {
 
   const handleEdit = user => {
     setSelectedUser(user);
-    setName(user.name);
-    setLastname(user.lastname);
-    setFdn(user.fdn);
-    setEmail(user.email);
-    setPassword(user.password);
-    setRol(user.rol);
-    // setName(user.nombre);
-    // setLastname(user.cedula);
-    // setFdn(user.telefono);
-    // setEmail(user.direccion);
-    
+
+    setName(user.usu_name);
+    setLastname(user.usu_lastName);
+    setFdn(user.usu_birthday);
+    setEmail(user.usu_email);
+    setPassword(user.usu_password);
+    setRol(user.usu_rol);
   };
 
   const handleDelete = async id => {
     try {
       await axios.delete(
         `https://infotpm-backend-production.up.railway.app/Users/${id}`
-        //'https://infotpm-backend-production.up.railway.app/Users/create'
-        //`https://sysprop-production.up.railway.app/clientes/${id}`
-        );
-      // fetchData();
+      );
+      fetchData();
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const itemUsuario = DataGetFetching("Users");
   const [modal, setModal] = useState(false);
-
-  // const handleClose = () => setShow(false);
   const toggle = () => setModal(!modal);
 
   return (
@@ -548,7 +534,7 @@ function Users() {
             </div>
           </div>
 
-          {/* <div className="row m-4 userTable">
+          <div className="row m-4 userTable">
             <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
@@ -562,24 +548,24 @@ function Users() {
                 </tr>
               </thead>
               <tbody>
-                {itemUsuario.map((itemUsuario, id) => (
+                {usuarios.map((user, id) => (
                   <tr key={id}>
-                    <td>{itemUsuario.id}</td>
-                    <td>{itemUsuario.name}</td>
-                    <td>{itemUsuario.username}</td>
-                    <td>{itemUsuario.correo}</td>
-                    <td>{itemUsuario.fecha_nacimiento}</td>
-                    <td>{itemUsuario.cargo}</td>
+                    <td>{user.usu_id}</td>
+                    <td>{user.usu_name}</td>
+                    <td>{user.usu_lastName}</td>
+                    <td>{user.usu_email}</td>
+                    <td>{user.usu_birthday}</td>
+                    <td>{user.usu_rol}</td>
                     <td>
                       <button
                         className="btn btn-danger"
-                        onClick={eliminarUsuario(itemUsuario.id)}
+                        onClick={() => handleDelete(user.usu_id)}
                       >
                         Eliminar
                       </button>
                       <button
                         className="btn btn-warning"
-                        onClick={editarUsuario(itemUsuario.id)}
+                        onClick={() => handleEdit(user)}
                       >
                         Editar
                       </button>
@@ -588,21 +574,21 @@ function Users() {
                 ))}
               </tbody>
             </Table>
-          </div> */}
+          </div>
         </div>
       </div>
 
       <Modal className='mt-5' isOpen={modal} size='xl' centered toggle={toggle}>
         <ModalHeader toggle={toggle}>Agregar Nuevo Usuario</ModalHeader>
         <ModalBody>
-          {/* <div className="row g-3">
+          <form onSubmit={handleSubmit} className="row g-3">
             <div className="col-md-6">
               <label className="form-label">
                 Nombre:
               </label>
               <Input
                 type="text"
-                onChange={handleInputChange}
+                onChange={event => setName(event.target.value)}
                 className="form-control"
                 id="nombre"
                 required
@@ -615,7 +601,7 @@ function Users() {
               <Input
                 type="text"
                 className="form-control"
-                onChange={handleInputChange}
+                onChange={event => setLastname(event.target.value)}
                 id="apellido"
                 required
               />
@@ -627,7 +613,7 @@ function Users() {
               <Input
                 type="date"
                 className="form-control"
-                onChange={handleInputChange}
+                onChange={event => setFdn(event.target.value)}
                 id="fdn"
                 required
               />
@@ -639,7 +625,7 @@ function Users() {
               <Input
                 type="text"
                 className="form-control"
-                onChange={handleInputChange}
+                onChange={event => setEmail(event.target.value)}
                 id="correo"
                 required
               />
@@ -651,7 +637,7 @@ function Users() {
               <Input
                 type="password"
                 className="form-control"
-                onChange={handleInputChange}
+                onChange={event => setPassword(event.target.value)}
                 id="contraseña"
                 required
               />
@@ -664,7 +650,9 @@ function Users() {
                 <Input
                   type="radio"
                   id="Usuario"
-                  onChange={handleInputChange}
+                  value="Usuario"
+                  checked={usu_rol === 'Usuario'}
+                  onChange={event => setRol(event.target.value)}
                   name="Usuario"
                 />
                 <label>Usuario</label>
@@ -674,85 +662,23 @@ function Users() {
                   type="radio"
                   id="Admin"
                   name="Admin"
-                  onChange={handleInputChange}
+                  value="Administrador"
+                  checked={usu_rol === 'Administrador'}
+                  onChange={event => setRol(event.target.value)}
                 ></Input>
                 <label>Admin</label>
               </div>
             </div>
-          </div> */}
-
-          <div>
-            <form onSubmit={handleSubmit}>
-              <label>
-                Nombre:
-                <input type="text" 
-                // value={name} 
-                onChange={event => setName(event.target.value)} />
-              </label>
-              <label>
-                Apellido:
-                <input type="text" 
-                // value={lastname} 
-                onChange={event => setLastname(event.target.value)} />
-              </label>
-              <label>
-                Edad:
-                <input type="text" 
-                // value={fdn} 
-                onChange={event => setFdn(event.target.value)} />
-              </label>
-              <label>
-                Email:
-                <input type="text" 
-                // value={email} 
-                onChange={event => setEmail(event.target.value)} />
-              </label>
-              <label>
-                Password:
-                <input type="text" 
-                // value={password} 
-                onChange={event => setPassword(event.target.value)} />
-              </label>
-              <label>
-                rol:
-                <input type="text" 
-                // value={rol} 
-                onChange={event => setRol(event.target.value)} />
-              </label>
-              <button type="submit">Guardar</button>
-            </form>
-            <ul>
-              {/* {usuarios.map(user => (
-                <li 
-                key={user.id}>
-                  {user.name}
-                  {user.lastname} 
-                  ({user.fdn})
-                  {user.email}
-                  {user.password}
-                  {user.rol} */}
-                  <button onClick={() => handleEdit()}>Editar</button>
-                  <button onClick={() => handleDelete()}>Eliminar</button>
-                {/* </li>
-              ))} */}
-            </ul>
-          </div>
+          </form>
         </ModalBody>
-        {/* <ModalFooter>
-          <Button
-            type="button"
-            onClick={handleSubmit}
-            color="primary"
-          >
-            Guardar cambios
+        <ModalFooter>
+          <Button color="primary" onClick={handleSubmit}>
+            Guardar
           </Button>
-          <Button
-            color="secondary"
-            onClick={toggle}
-          >
+          <Button color="secondary" onClick={toggle}>
             Cancelar
           </Button>
-        </ModalFooter> */}
+        </ModalFooter>
       </Modal>
     </div>
   )
