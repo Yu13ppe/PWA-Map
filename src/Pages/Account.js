@@ -1,42 +1,40 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
 import { useHistory } from "react-router-dom";
-import routes from '../Config/Routes-Nav'
 
 function Account() {
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [usu_email, setEmail] = useState('');
+  const [usu_password, setPassword] = useState('');
+  const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState("");
   const [attemps, setAttemps] = useState(3);
-  const [visibility, setVisibility] = useState(routes);
-  
-  useEffect(() => {
-    // Actualiza la vista cada vez que cambia la variable "visibility"
-    setVisibility(visibility);
-  }, [visibility]);
 
-  const handleButtonClick = () => {
-    const updatedVisibility = visibility.map((route) =>
-      route.title === "Cuenta"
-        ? { ...route, visibility: false }
-        : { ...route, visibility: true }
-    );
-    setVisibility(updatedVisibility);
-    console.log(updatedVisibility)
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
+      setUsuarios(response.data);
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Previene el comportamiento predeterminado del formulario
-    const user = users.find((user) => user.email === email && user.password === password);
+    const user = usuarios.find((user) => user.usu_email === usu_email && user.usu_password === usu_password);
 
     if(attemps === 0){
       setError("Has superado el número de intentos. Intenta más tarde.");
     }
     else if (user) {
       // Si se encuentra el usuario, cambia de ventana
-      handleButtonClick();
       history.push("/Perfil");
     }
     else {
@@ -45,12 +43,6 @@ function Account() {
       setError(`Correo o contraseña incorrectos. Inténtalo de nuevo. Intentos restantes: ${attemps}`);
     }
   };
-
-  const users = [
-    { email: "joseportillo@gmail.com", password: "123456" },
-    { email: "jesusramirez@hotmail.com", password: "123456" },
-    { email: "rubenurdaneta@gmail.com", password: "123456" },
-  ];
 
   return (
     <div className='fondo'>
@@ -68,7 +60,7 @@ function Account() {
             <Input
               className='containerCorreo'
               type="email"
-              value={email}
+              value={usu_email}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
               id="exampleEmail"
@@ -83,7 +75,7 @@ function Account() {
               name="password"
               placeholder="Introduzca su contraseña"
               type="password"
-              value={password}
+              value={usu_password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <h3 className='olvidarContraseña'>

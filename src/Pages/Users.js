@@ -34,7 +34,6 @@ function Users() {
     setSearchQuery(event.target.value);
   };
 
-
   useEffect(() => {
     fetchData();
   }, []);

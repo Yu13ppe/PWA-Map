@@ -1,22 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
 import { useHistory } from "react-router-dom";
-// import routes from '../Config/Routes-Nav'
 
 function Admin() {
   const history = useHistory();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [usu_email, setEmail] = useState('');
+  const [usu_password, setPassword] = useState('');
+  const [usuarios, setUsuarios] = useState([]);
+  const [error, setError] = useState('');
   const [attemps, setAttemps] = useState(3);
-  // const [visibility, setVisibility] = useState(routes);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
+      setUsuarios(response.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Previene el comportamiento predeterminado del formulario
-    const user = users.find((user) => user.email === email && user.password === password);
+    const user = usuarios.find((user) => user.usu_email === usu_email && user.usu_password === usu_password && user.usu_rol === "Administrador");
 
-    if(attemps === 0){
+    if (attemps === 0) {
       setError("Has superado el número de intentos. Intenta más tarde.");
     }
     else if (user) {
@@ -25,16 +39,10 @@ function Admin() {
     }
     else {
       // Si no se encuentra el usuario, establece un mensaje de error
-      setAttemps(attemps -1);
+      setAttemps(attemps - 1);
       setError(`Correo o contraseña incorrectos. Inténtalo de nuevo. Intentos restantes: ${attemps}`);
     }
   };
-
-  const users = [
-    { email: "joseportillo@admin.com", password: "123456" },
-    { email: "jesusramirez@admin.com", password: "123456" },
-    { email: "rubenurdaneta@admin.com", password: "123456" },
-  ];
 
   return (
     <div className='fondo'>
@@ -52,7 +60,7 @@ function Admin() {
             <Input
               className='containerCorreo'
               type="email"
-              value={email}
+              value={usu_email}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
               id="exampleEmail"
@@ -67,7 +75,7 @@ function Admin() {
               name="password"
               placeholder="Introduzca su contraseña"
               type="password"
-              value={password}
+              value={usu_password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <h3 className='olvidarContraseña'>
@@ -85,4 +93,4 @@ function Admin() {
   )
 }
 
-export {Admin}
+export { Admin }
