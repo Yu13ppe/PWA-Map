@@ -19,6 +19,7 @@ function Register() {
     try {
       if(usu_password !== confPass){
         setError('Las contraseñas no coinciden')
+
       } else {
       await axios.post(
         'https://infotpm-backend-production.up.railway.app/Users/create',
@@ -37,7 +38,8 @@ function Register() {
       setFdn('');
       setEmail('');
       setPassword('');
-      setConfPass('')
+      setConfPass('');
+
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +89,7 @@ function Register() {
           <form onSubmit={handleSubmit} className='Form'>
             <div className='FormName'>
               <div className='Nombre'>
-                <Label className='nombreRegistro' htmlfor="exampleName">
+                <Label className='nombreRegistro' htmlFor="exampleName">
                   Nombre
                 </Label>
                 <Input
@@ -99,12 +101,12 @@ function Register() {
                   id="exampleName"
                   placeholder="Introduzca su Nombre"
                   pattern="^[A-ZÑa-zñ]+$"
-                  maxlength="48"
+                  maxLength="48"
                   required
                 />
               </div>
               <div className='Apellido'>
-                <Label className='apellidoRegistro' htmlfor="exampleApellido">
+                <Label className='apellidoRegistro' htmlFor="exampleApellido">
                   Apellido
                 </Label>
                 <Input
@@ -116,12 +118,12 @@ function Register() {
                   id="exampleApellido"
                   placeholder="Introduzca su Apellido"
                   pattern="^[A-ZÑa-zñ]+$"
-                  maxlength="48"
+                  maxLength="48"
                   required
                 />
               </div>
             </div>
-            <Label className='correoRegistro' htmlfor="exampleEmail">
+            <Label className='correoRegistro' htmlFor="exampleEmail">
               Email
             </Label>
             <Input
@@ -136,7 +138,7 @@ function Register() {
             />
 
 
-            <Label className='contrasenaRegistro' htmlfor="examplePassword">
+            <Label className='contrasenaRegistro' htmlFor="examplePassword">
               Password
             </Label>
             <Input
@@ -151,7 +153,7 @@ function Register() {
             />
             {error && <div color='red'>{error}</div>}
 
-            <Label className='confirmarContrasenaRegistro' htmlfor="exampleConfirmPassword">
+            <Label className='confirmarContrasenaRegistro' htmlFor="exampleConfirmPassword">
               Confirm Password
             </Label>
             <Input
@@ -167,7 +169,7 @@ function Register() {
             {error && <div color='red'>{error}</div>}
 
 
-            <Label className='nacimientoRegistro' htmlfor="exampleDate">
+            <Label className='nacimientoRegistro' htmlFor="exampleDate">
               Fecha de Nacimiento
             </Label>
             <Input
@@ -179,7 +181,6 @@ function Register() {
               type="date"
               required
             />
-            {error && <div color='red'>{error}</div>}
 
             <div className='RegisterButtons'>
               <Link to="/Account"><button className='botonVolverRegistro btnRegister'>Volver</button></Link>
