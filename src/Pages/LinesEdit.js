@@ -146,7 +146,7 @@ function LinesEdit() {
                     <td>{line.lin_close}</td>
                     <td>{line.lin_exit_point}</td>
                     <td>{line.lin_arrival_point}</td>
-                    <td>{line.lin_price}</td>
+                    <td>{line.lin_price} Bs.</td>
                     <td>
                       <Button
                         color="primary"
@@ -156,7 +156,7 @@ function LinesEdit() {
                       </Button>
                       <Button
                         color="danger"
-                        onClick={() => handleDelete(line.id)}
+                        onClick={() => handleDelete(line.lin_id)}
                       >
                         Eliminar
                       </Button>
@@ -245,7 +245,7 @@ function LinesEdit() {
               <Input
                 type="text"
                 defaultValue={lin_price}
-                onChange={e => setPrice(`${e.target.value} Bs`)}
+                onChange={e => setPrice(e.target.value)}
                 className="form-control"
                 id="Precio"
                 required
