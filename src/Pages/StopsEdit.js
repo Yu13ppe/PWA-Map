@@ -1,31 +1,97 @@
-import { useState } from 'react';
-import axios from "axios";
-import {DataGetFetching} from "../fetch/DataGetFetching";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
 
-function agregarParada(ruta, nombre, latitud, longitud) {
-  console.log("1");
-  axios
-    .post(ruta, {
-      nombre: nombre,
-      latitud: latitud,
-      longitud: longitud,
-    })
-    .then((res) => console.log("posting data", res))
-    .catch((err) => console.log(err));
-}
-
-function eliminarParada() { }
-function editarParada() { }
-
 function StopsEdit() {
-  const itemParada = DataGetFetching("stops");
-  // const [show, setShow] = useState(false);
+  const [par_name, setName] = useState('');
+  const [par_lat, setLat] = useState('');
+  const [par_long, setLong] = useState('');
+  const [par_description, setDesc] = useState('');
+  const [stop, setStops] = useState([]);
+  const [selectedStop, setSelectedStop] = useState(null);
   const [modal, setModal] = useState(false);
+  const toggle = () => {
+    setModal(!modal)
+    if (modal === false) {
+      setName('')
+      setLat('')
+      setLong('')
+      setDesc('')
+    }
+  };
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-  const toggle = () => setModal(!modal);
+  const filteredStops = stop.filter(stop => {
+    const fullName = `${stop.par_name}`.toLowerCase();
+    return fullName.includes(searchQuery.toLowerCase());
+  });
+
+  const handleSearch = event => {
+    setSearchQuery(event.target.value);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Stops');
+      setStops(response.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEdit = stop => {
+    setSelectedStop(stop);
+    toggle();
+
+    setName(stop.par_name);
+    setLat(stop.par_lat);
+    setLong(stop.par_long);
+    setDesc(stop.par_description);
+  };
+
+  const handleDelete = async id => {
+    try {
+      await axios.delete(`https://infotpm-backend-production.up.railway.app/Stops/${id}`);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      if (selectedStop) {
+        await axios.put(`https://infotpm-backend-production.up.railway.app/Stops/${selectedStop.par_id}`, {
+          par_name,
+          par_lat,
+          par_long,
+          par_description
+        });
+      } else {
+        await axios.post('https://infotpm-backend-production.up.railway.app/Stops/create', {
+          par_name,
+          par_lat,
+          par_long,
+          par_description
+        });
+      }
+      setName('');
+      setLat('');
+      setLong('');
+      setDesc('');
+      fetchData();
+      toggle();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
   return (
     <div>
@@ -34,22 +100,22 @@ function StopsEdit() {
           Paradas
           <div className='rayaTitulo' />
         </h1>
-        <div className='containerInternoUsers col'>
-          <div className=" container">
-            <div className='row m-5 '>
-              <Input
-                type="text"
-                className="form-control"
-                placeholder="Buscar Parada..."
-              />
-              <button
-                type="button"
-                className="btn btn-primary col-6"
-                onClick={toggle}
-              >
-                Agregar Parada
-              </button>
-            </div>
+        <div className=" container">
+          <div className='row m-5 '>
+            <Input
+              type="text"
+              className="form-control"
+              value={searchQuery}
+              onChange={handleSearch}
+              placeholder="Buscar Parada..."
+            />
+            <button
+              type="button"
+              className="btn btn-primary col-6"
+              onClick={toggle}
+            >
+              Agregar Parada
+            </button>
           </div>
 
           <div className="row m-4 userTable">
@@ -60,29 +126,31 @@ function StopsEdit() {
                   <th>Nombre</th>
                   <th>Latitud</th>
                   <th>Longitud</th>
+                  <th>Descripción</th>
                   <th>Funciones</th>
                 </tr>
               </thead>
               <tbody>
-                {itemParada.map((itemParada, id) => (
-                  <tr key={id}>
-                    <td>{itemParada.id}</td>
-                    <td>{itemParada.nombre}</td>
-                    <td>{itemParada.latitud}</td>
-                    <td>{itemParada.longitud}</td>
+                {filteredStops.map(stop => (
+                  <tr key={stop.par_id}>
+                    <td>{stop.par_id}</td>
+                    <td>{stop.par_name}</td>
+                    <td>{stop.par_lat}</td>
+                    <td>{stop.par_long}</td>
+                    <td>{stop.par_description}</td>
                     <td>
-                      <button
-                        className="btn btn-danger"
-                        onClick={eliminarParada(itemParada.id)}
-                      >
-                        Eliminar
-                      </button>
-                      <button
-                        className="btn btn-warning"
-                        onClick={editarParada(itemParada.id)}
+                      <Button
+                        color="primary"
+                        onClick={() => handleEdit(stop)}
                       >
                         Editar
-                      </button>
+                      </Button>
+                      <Button
+                        color="danger"
+                        onClick={() => handleDelete(stop.par_id)}
+                      >
+                        Eliminar
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -93,7 +161,7 @@ function StopsEdit() {
       </div>
 
       <Modal className='mt-5' isOpen={modal} size='xl' centered toggle={toggle}>
-        <ModalHeader toggle={toggle}>Agregar Nuevo Parada</ModalHeader>
+        <ModalHeader toggle={toggle}>Agregar Nueva Parada</ModalHeader>
         <ModalBody>
           <div className="row g-3">
             <div className="col-md-12">
@@ -102,6 +170,8 @@ function StopsEdit() {
               </label>
               <Input
                 type="text"
+                defaultValue={par_name}
+                onChange={e => setName(e.target.value)}
                 className="form-control"
                 id="nombre"
                 required
@@ -109,10 +179,12 @@ function StopsEdit() {
             </div>
             <div className="col-md-12">
               <label for="latitud" className="form-label">
-              Latitud:
+                Latitud:
               </label>
               <Input
                 type="text"
+                defaultValue={par_lat}
+                onChange={e => setLat(e.target.value)}
                 className="form-control"
                 id="latitud"
                 required
@@ -120,16 +192,35 @@ function StopsEdit() {
             </div>
             <div className="col-md-12">
               <label for="longitud" className="form-label">
-              Longitud:
+                Longitud:
               </label>
-              <Input type="text" className="form-control" id="longitud" required />
+              <Input
+                type="text"
+                defaultValue={par_long}
+                onChange={e => setLong(e.target.value)}
+                className="form-control"
+                id="longitud"
+                required
+              />
+            </div>
+            <div className="col-md-12">
+              <label for="longitud" className="form-label">
+                Descripción:
+              </label>
+              <Input
+                type="text"
+                defaultValue={par_description}
+                onChange={e => setDesc(e.target.value)}
+                className="form-control"
+                id="descripcion"
+              />
             </div>
           </div>
         </ModalBody>
         <ModalFooter>
           <Button
             type="button"
-            onClick={agregarParada("/Users")}
+            onClick={handleSave}
             color="primary"
           >
             Guardar cambios
@@ -146,4 +237,4 @@ function StopsEdit() {
   )
 }
 
-export {StopsEdit}
+export { StopsEdit }

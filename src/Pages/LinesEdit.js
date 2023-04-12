@@ -1,31 +1,102 @@
-import { useState } from 'react';
-import axios from "axios";
-import {DataGetFetching} from "../fetch/DataGetFetching";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
 
-function agregarLinea(ruta, nombre, latitud, longitud) {
-  console.log("1");
-  axios
-    .post(ruta, {
-      nombre: nombre,
-      latitud: latitud,
-      longitud: longitud,
-    })
-    .then((res) => console.log("posting data", res))
-    .catch((err) => console.log(err));
-}
-
-function eliminarLinea() { }
-function editarLinea() { }
-
 function LinesEdit() {
-  const itemLinea = DataGetFetching("line");
-  // const [show, setShow] = useState(false);
+  const [lin_name, setName] = useState('');
+  const [lin_start, setStart] = useState('');
+  const [lin_close, setClose] = useState('');
+  const [lin_exit_point, setExit] = useState('');
+  const [lin_arrival_point, setArrival] = useState('');
+  const [lin_price, setPrice] = useState(Number)
+  const [line, setLine] = useState([]);
+  const [selectedLine, setSelectedLine] = useState(null);
   const [modal, setModal] = useState(false);
+  const toggle = () => {
+    setModal(!modal)
+    if (modal === false) {
+      setName('')
+      setStart('')
+      setClose('')
+      setExit('')
+      setArrival('')
+      setPrice()
+    }
+  };
 
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-  const toggle = () => setModal(!modal);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredStops = line.filter(line => {
+    const fullName = `${line.lin_name}`.toLowerCase();
+    return fullName.includes(searchQuery.toLowerCase());
+  });
+
+  const handleSearch = event => {
+    setSearchQuery(event.target.value);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Line');
+      setLine(response.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleEdit = line => {
+    setSelectedLine(line);
+    toggle();
+
+    setName(line.lin_name);
+    setStart(line.lin_start);
+    setClose(line.lin_close);
+    setExit(line.lin_exit_point);
+    setArrival(line.lin_arrival_point);
+    setPrice(line.lin_price);
+  };
+
+  const handleDelete = async id => {
+    try {
+      await axios.delete(`https://infotpm-backend-production.up.railway.app/Line/${id}`);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      if (selectedLine) {
+        await axios.put(`https://infotpm-backend-production.up.railway.app/Line/${selectedLine.lin_id}`, {
+          lin_name,
+          lin_start,
+          lin_close,
+          lin_exit_point,
+          lin_arrival_point,
+          lin_price,
+        });
+      } else {
+        await axios.post('https://infotpm-backend-production.up.railway.app/line/create', {
+          lin_name,
+          lin_start,
+          lin_close,
+          lin_exit_point,
+          lin_arrival_point,
+          lin_price,
+        });
+      }
+      fetchData();
+      toggle();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -34,22 +105,22 @@ function LinesEdit() {
           Lineas
           <div className='rayaTitulo' />
         </h1>
-        <div className='containerInternoUsers col'>
-          <div className=" container">
-            <div className='row m-5 '>
-              <Input
-                type="text"
-                className="form-control"
-                placeholder="Buscar Linea..."
-              />
-              <button
-                type="button"
-                className="btn btn-primary col-6"
-                onClick={toggle}
-              >
-                Agregar Linea
-              </button>
-            </div>
+        <div className=" container">
+          <div className='row m-5 '>
+            <Input
+              type="text"
+              className="form-control"
+              value={searchQuery}
+              onChange={handleSearch}
+              placeholder="Buscar Linea..."
+            />
+            <button
+              type="button"
+              className="btn btn-primary col-6"
+              onClick={toggle}
+            >
+              Agregar Linea
+            </button>
           </div>
 
           <div className="row m-4 userTable">
@@ -62,31 +133,33 @@ function LinesEdit() {
                   <th>Longitud (Inicio)</th>
                   <th>Latitud (Llegada)</th>
                   <th>Longitud (Llegada)</th>
+                  <th>Precio</th>
                   <th>Funciones</th>
                 </tr>
               </thead>
               <tbody>
-                {itemLinea.map((itemLinea, id) => (
-                  <tr key={id}>
-                    <td>{itemLinea.id}</td>
-                    <td>{itemLinea.nombre}</td>
-                    <td>{itemLinea.latitudI}</td>
-                    <td>{itemLinea.longitudI}</td>
-                    <td>{itemLinea.latitudL}</td>
-                    <td>{itemLinea.longitudL}</td>
+                {filteredStops.map(line => (
+                  <tr key={line.lin_id}>
+                    <td>{line.lin_id}</td>
+                    <td>{line.lin_name}</td>
+                    <td>{line.lin_start}</td>
+                    <td>{line.lin_close}</td>
+                    <td>{line.lin_exit_point}</td>
+                    <td>{line.lin_arrival_point}</td>
+                    <td>{line.lin_price}</td>
                     <td>
-                      <button
-                        className="btn btn-danger"
-                        onClick={eliminarLinea(itemLinea.id)}
-                      >
-                        Eliminar
-                      </button>
-                      <button
-                        className="btn btn-warning"
-                        onClick={editarLinea(itemLinea.id)}
+                      <Button
+                        color="primary"
+                        onClick={() => handleEdit(line)}
                       >
                         Editar
-                      </button>
+                      </Button>
+                      <Button
+                        color="danger"
+                        onClick={() => handleDelete(line.id)}
+                      >
+                        Eliminar
+                      </Button>
                     </td>
                   </tr>
                 ))}
@@ -97,7 +170,7 @@ function LinesEdit() {
       </div>
 
       <Modal className='mt-5' isOpen={modal} size='xl' centered toggle={toggle}>
-        <ModalHeader toggle={toggle}>Agregar Nuevo Linea</ModalHeader>
+        <ModalHeader toggle={toggle}>Agregar Nueva Linea</ModalHeader>
         <ModalBody>
           <div className="row g-3">
             <div className="col-md-12">
@@ -106,6 +179,8 @@ function LinesEdit() {
               </label>
               <Input
                 type="text"
+                defaultValue={lin_name}
+                onChange={e => setName(e.target.value)}
                 className="form-control"
                 id="nombre"
                 required
@@ -117,6 +192,8 @@ function LinesEdit() {
               </label>
               <Input
                 type="text"
+                defaultValue={lin_start}
+                onChange={e => setStart(e.target.value)}
                 className="form-control"
                 id="latitud"
                 required
@@ -128,6 +205,8 @@ function LinesEdit() {
               </label>
               <Input
                 type="text"
+                defaultValue={lin_close}
+                onChange={e => setClose(e.target.value)}
                 className="form-control"
                 id="longitud"
                 required
@@ -139,6 +218,8 @@ function LinesEdit() {
               </label>
               <Input
                 type="text"
+                defaultValue={lin_exit_point}
+                onChange={e => setExit(e.target.value)}
                 className="form-control"
                 id="latitud"
                 required
@@ -150,8 +231,23 @@ function LinesEdit() {
               </label>
               <Input
                 type="text"
+                defaultValue={lin_arrival_point}
+                onChange={e => setArrival(e.target.value)}
                 className="form-control"
                 id="longitud"
+                required
+              />
+            </div>
+            <div className="col-md-6">
+              <label for="longitud" className="form-label">
+                Precio:
+              </label>
+              <Input
+                type="text"
+                defaultValue={lin_price}
+                onChange={e => setPrice(`${e.target.value} Bs`)}
+                className="form-control"
+                id="Precio"
                 required
               />
             </div>
@@ -160,7 +256,7 @@ function LinesEdit() {
         <ModalFooter>
           <Button
             type="button"
-            onClick={agregarLinea("/Users")}
+            onClick={handleSave}
             color="primary"
           >
             Guardar cambios

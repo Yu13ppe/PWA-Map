@@ -1,10 +1,9 @@
 .containerUsers {
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 90vh;
+    min-height: 90vh;
     width: 80%;
     margin: auto;
     margin-top: 5em;
@@ -12,6 +11,7 @@
     background-color: #13684B;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     min-width: 850px;
+    overflow-x: auto;
 
     .tituloUser {
         color: #FFFFFF;
@@ -27,37 +27,33 @@
         }
     }
 
-    .containerInternoUsers {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        height: 70%;
-        width: 90%;
-        background-color: #0A4333;
-        box-shadow: inset 4px 4px 4px rgba(0, 0, 0, 0.25);
-        margin-bottom: 5em;
+    h3{
+        color: #FFFFFF;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        text-align: center;
+        font-family: 'Segoe UI';
+        font-style: normal;
+    }
 
-        h3{
-            color: #FFFFFF;
-            margin-top: 1em;
-            margin-bottom: 1em;
-            text-align: center;
-            font-family: 'Segoe UI';
-            font-style: normal;
-        }
+    .btn{
+        margin: auto;
+        margin-top: 1em;
+    }
+
+    .userTable td{
+        color: #FFFFFF;
+        background-color: #0A4333;
 
         .btn{
-            margin: auto;
-            margin-top: 1em;
-        }
-
-        .userTable{
-            color: #FFFFFF;
-            overflow: auto;
+            margin: 1em 0.5em;
         }
     }
+    .userTable tr{
+        color: #FFFFFF;
+    }
 }
+
 
 @media screen and (max-width:450px) {
     .containerUsers {
