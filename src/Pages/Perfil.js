@@ -12,7 +12,7 @@ function NonStrictModal(props) {
   );
 }
 
-function Perfil(props) {
+function Perfil() {
   const location = useLocation();
   const [like, setLike] = useState(false);
   const [modal, setModal] = useState(false);
@@ -59,7 +59,6 @@ const handleClose = () => {
         }
       );
 
-      // fetchCommentsData();
       setCom_comment('');
       setCom_idUser('');
       setCom_idLine('');

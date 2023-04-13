@@ -235,7 +235,7 @@ function Users() {
                 name="date"
                 defaultValue={usu_birthday}
                 onChange={handleBirthdayChange}
-                type="date"
+                type="text"
                 placeholderText='dd/MM/yyyy'
                 required
               />

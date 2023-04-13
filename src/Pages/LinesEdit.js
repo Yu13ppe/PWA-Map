@@ -192,7 +192,7 @@ function LinesEdit() {
                 Latitud (Punto de Inicio):
               </label>
               <Input
-                type="text"
+                type="number"
                 defaultValue={lin_start}
                 onChange={e => setStart(e.target.value)}
                 className="form-control"
@@ -206,7 +206,7 @@ function LinesEdit() {
                 Longitud Punto de Inicio:
               </label>
               <Input
-                type="text"
+                type="number"
                 defaultValue={lin_close}
                 onChange={e => setClose(e.target.value)}
                 className="form-control"
@@ -220,7 +220,7 @@ function LinesEdit() {
                 Latitud (Punto de Llegada):
               </label>
               <Input
-                type="text"
+                type="number"
                 defaultValue={lin_exit_point}
                 onChange={e => setExit(e.target.value)}
                 className="form-control"
@@ -234,7 +234,7 @@ function LinesEdit() {
                 Longitud Punto de Llegada:
               </label>
               <Input
-                type="text"
+                type="number"
                 defaultValue={lin_arrival_point}
                 onChange={e => setArrival(e.target.value)}
                 className="form-control"
@@ -248,7 +248,7 @@ function LinesEdit() {
                 Precio:
               </label>
               <Input
-                type="text"
+                type="number"
                 defaultValue={lin_price}
                 onChange={e => setPrice(e.target.value)}
                 className="form-control"

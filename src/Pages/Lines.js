@@ -17,7 +17,6 @@ function Lines() {
     const [show, setShow] = useState(false);
     const [lineList, setListLine] = useState([]);
     const [selectedName, setSelectedName] = useState('');
-    // const [comentarios, setComentarios] = useState([])
     const [com_idUser, setCom_idUser] = useState('');
     const [com_idLine, setCom_idLine] = useState('');
     const [com_comment, setCom_comment] = useState('');
@@ -39,7 +38,6 @@ function Lines() {
 
     useEffect(() => {
         fetchData();
-        // fetchCommentsData();
     }, []);
 
     const fetchData = async () => {
@@ -51,16 +49,6 @@ function Lines() {
             console.log(error);
         }
     };
-
-    // const fetchCommentsData = async () => {
-    //     try {
-    //         const response = await axios.get('https://infotpm-backend-production.up.railway.app/Line');
-    //         setComentarios(response.data);
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
 
     const handleSubmit = async event => {
         event.preventDefault();
