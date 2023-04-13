@@ -183,6 +183,7 @@ function LinesEdit() {
                 onChange={e => setName(e.target.value)}
                 className="form-control"
                 id="nombre"
+                maxLength="48"
                 required
               />
             </div>
@@ -196,6 +197,7 @@ function LinesEdit() {
                 onChange={e => setStart(e.target.value)}
                 className="form-control"
                 id="latitud"
+                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
                 required
               />
             </div>
@@ -209,6 +211,7 @@ function LinesEdit() {
                 onChange={e => setClose(e.target.value)}
                 className="form-control"
                 id="longitud"
+                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
                 required
               />
             </div>
@@ -222,6 +225,7 @@ function LinesEdit() {
                 onChange={e => setExit(e.target.value)}
                 className="form-control"
                 id="latitud"
+                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
                 required
               />
             </div>
@@ -235,6 +239,7 @@ function LinesEdit() {
                 onChange={e => setArrival(e.target.value)}
                 className="form-control"
                 id="longitud"
+                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
                 required
               />
             </div>
@@ -248,6 +253,7 @@ function LinesEdit() {
                 onChange={e => setPrice(e.target.value)}
                 className="form-control"
                 id="Precio"
+                pattern="^[0-9]*$"
                 required
               />
             </div>

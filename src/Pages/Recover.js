@@ -1,26 +1,48 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
 
 function Recover() {
+  const [to, setTo] = useState("");
+  const [usuarios, setUsuarios] = useState([]);
+  const history = useHistory();
 
-  const DB = "joseportillo@hotmail.com"
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const pulsarR = () =>{
-    let correoR = document.getElementById("exampleEmail").value;
-    console.log(correoR);
-
-    if(correoR === DB){
-      //Aqui va la funcion de la busqueda del correo
-      alert("Se evio la informacion solicitada a su correo correctamente");
-    }else if(correoR===''){
-      alert("Por favor, rellene el campo requerido");
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
+      setUsuarios(response.data);
+    } catch (error) {
+      console.log(error);
     }
-    else{
-      alert("No se encontraron resultados en el sistema");
+  };
+
+  const handleSubmit = (event) =>{
+    event.preventDefault();
+    const user = usuarios.find((user) => user.usu_email !== to);
+    if (!user) {
+      alert('El correo no existe');
+      return;
+    }
+    try {
+      axios.post(
+        'https://infotpm-backend-production.up.railway.app/Email',
+        {
+          to,
+        }
+      );
+      alert('El correo fue enviado con exito');
+      setTo('');
+      history.push('/Account');
+    } catch (error) {
+      console.log(error);
     }
   }
-
 
   return (
     <div>
@@ -41,12 +63,13 @@ function Recover() {
             className='inputCorreoPassword' 
             type="email" 
             name="email" 
-            id="exampleEmail" 
+            id="to" 
+            onChange={(e) => setTo(e.target.value)}
             placeholder="Introduzca su correo" 
             />
             
             <div className='RecoverButtons'>
-            <button className='buttonBuscarPassword btnRecover'onClick={() => {pulsarR()}}> Buscar</button>
+            <button className='buttonBuscarPassword btnRecover' onClick={handleSubmit} > Buscar</button>
             <Link to="/Account"><button className='buttonCancelarPassword btnRecover'>Cancelar</button></Link>
             </div>
           </div>

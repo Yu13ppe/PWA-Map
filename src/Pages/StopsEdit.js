@@ -187,6 +187,7 @@ function StopsEdit() {
                 onChange={e => setLat(e.target.value)}
                 className="form-control"
                 id="latitud"
+                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
                 required
               />
             </div>
@@ -200,6 +201,7 @@ function StopsEdit() {
                 onChange={e => setLong(e.target.value)}
                 className="form-control"
                 id="longitud"
+                pattern="^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$"
                 required
               />
             </div>

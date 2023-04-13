@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 function Users() {
   const [usu_name, setName] = useState('');
@@ -114,6 +116,10 @@ function Users() {
     }
   };
 
+  function handleBirthdayChange(date) {
+    setFdn(date);
+  }
+
   return (
     <div>
       <div className='containerUsers'>
@@ -217,12 +223,20 @@ function Users() {
               <label className="form-label">
                 Fecha de Nacimiento:
               </label>
-              <Input
-                type="date"
-                className="form-control"
+              <DatePicker
+                selected={usu_birthday}
+                dateFormat="dd/MM/yyyy"
+                maxDate={new Date("2012-01-01")}
+                showYearDropdown
+                scrollableYearDropdown
+                yearDropdownItemNumber={70}
+                className='form-control'
+                id="exampleDate"
+                name="date"
                 defaultValue={usu_birthday}
-                onChange={event => setFdn(event.target.value)}
-                id="fdn"
+                onChange={handleBirthdayChange}
+                type="date"
+                placeholderText='dd/MM/yyyy'
                 required
               />
             </div>
