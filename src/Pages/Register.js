@@ -1,26 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
+import { useHistory } from "react-router-dom";
 
 function Register() {
+  const history = useHistory();
   const [usu_name, setName] = useState('');
   const [usu_lastName, setLastname] = useState('');
   const [usu_birthday, setFdn] = useState('');
   const [usu_email, setEmail] = useState('');
   const [usu_password, setPassword] = useState('');
+  const [usuarios, setUsuarios] = useState([]);
   const usu_rol = 'Usuario';
-  const [confPass, setConfPass] = useState('')
-  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
+      setUsuarios(response.data);
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async event => {
     event.preventDefault();
+    const user = usuarios.find((user) => user.usu_email === usu_email);
 
+    if (user) {
+      alert('El correo ya existe');
+      return;
+    }
     try {
-      if(usu_password !== confPass){
-        setError('Las contraseñas no coinciden')
-
-      } else {
       await axios.post(
         'https://infotpm-backend-production.up.railway.app/Users/create',
         {
@@ -29,21 +45,20 @@ function Register() {
           usu_email,
           usu_birthday,
           usu_password,
-          usu_rol
-        });
-      }
-
+          usu_rol,
+        }
+      );
       setName('');
       setLastname('');
       setFdn('');
       setEmail('');
       setPassword('');
-      setConfPass('');
-
+      history.push('/Account');
     } catch (error) {
       console.log(error);
     }
   };
+  
 
   // const pulsarRegister = () => {
   //   let expReg = /^(([^<>()[]\.,;:\s@”]+(.[^<>()[]\.,;:\s@”]+)*)|(“.+”))@(([[0–9]{1,3}.[0–9]{1,3}.[0–9]{1,3}.[0–9]{1,3}])|(([a-zA-Z-0–9]+.)+[a-zA-Z]{2,3}))$/
@@ -137,7 +152,6 @@ function Register() {
               required
             />
 
-
             <Label className='contrasenaRegistro' htmlFor="examplePassword">
               Password
             </Label>
@@ -151,23 +165,6 @@ function Register() {
               type="password"
               required
             />
-            {error && <div color='red'>{error}</div>}
-
-            <Label className='confirmarContrasenaRegistro' htmlFor="exampleConfirmPassword">
-              Confirm Password
-            </Label>
-            <Input
-              className='inputConfirmarContrasenaRegistro'
-              id="exampleConfirmPassword"
-              name="confirmPassword"
-              defaultValue={confPass}
-              onChange={event => setConfPass(event.target.value)}
-              placeholder="password"
-              type="password"
-              required
-            />
-            {error && <div color='red'>{error}</div>}
-
 
             <Label className='nacimientoRegistro' htmlFor="exampleDate">
               Fecha de Nacimiento
