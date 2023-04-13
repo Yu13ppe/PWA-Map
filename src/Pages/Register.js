@@ -59,40 +59,6 @@ function Register() {
     }
   };
   
-
-  // const pulsarRegister = () => {
-  //   let expReg = /^(([^<>()[]\.,;:\s@”]+(.[^<>()[]\.,;:\s@”]+)*)|(“.+”))@(([[0–9]{1,3}.[0–9]{1,3}.[0–9]{1,3}.[0–9]{1,3}])|(([a-zA-Z-0–9]+.)+[a-zA-Z]{2,3}))$/
-
-  //   if (!usu_name.checkValidity()) {
-  //     setError('Coloque letras en el campo del nombre');
-  //   } else if (usu_name === '') {
-  //     setError("Rellene el campo de nombre");
-  //   } else if (usu_lastName === '') {
-  //     setError('Rellene el campo de apellido');
-  //   } else if (!usu_lastName.checkValidity()) {
-  //     setError("Solo coloque letras en el campo del apellido");
-  //   } else if (!expReg.test(usu_email.value)) {
-  //     setError("Coloque un correo valido");
-  //   } else if (usu_password === '') {
-  //     setError("Complete el campo de contraseña");
-  //   } else if (confPass === '') {
-  //     setError("Complete el campo de confirmar contraseña");
-  //   } else if (usu_password !== confPass) {
-  //     setError("Las contraseñas no coinciden")
-  //   } else if (usu_birthday === '') {
-  //     setError("Complete el campo de Fecha de Nacimiento");
-  //   } else if (
-  //     usu_name.checkValidity() &&
-  //     usu_lastName.checkValidity() &&
-  //     expReg.test(usu_email.value) &&
-  //     usu_password !== '' &&
-  //     confPass !== '' &&
-  //     usu_password === confPass 
-  //   ) {
-  //     handleSubmit();
-  //   }
-  // }
-
   return (
     <div>
       <div className='containerInternoRegistro'>

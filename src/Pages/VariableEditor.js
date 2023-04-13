@@ -35,7 +35,7 @@ const VariableEditor = () => {
                 </Accordion.Item>
 
                 <Accordion.Item value="focus-ring">
-                    <Accordion.Control className="rdw-faq-title">¿Deseas ver o editar la lista de usuarios?</Accordion.Control>
+                    <Accordion.Control className="rdw-faq-title">¿Deseas ver o editar la lista de Lineas?</Accordion.Control>
                     <Accordion.Panel className="rdw-faq-content">
                     Proporcionamos la opcion del administrador de poder visualizar o editar la lista de Lineas dentro del sistema.
                         <br/>

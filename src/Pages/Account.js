@@ -30,16 +30,26 @@ function Account() {
     e.preventDefault(); // Previene el comportamiento predeterminado del formulario
     const user = usuarios.find((user) => user.usu_email === usu_email && user.usu_password === usu_password);
 
-    if(attemps === 0){
+    if (attemps === 0) {
       setError("Has superado el número de intentos. Intenta más tarde.");
     }
     else if (user) {
       // Si se encuentra el usuario, cambia de ventana
-      history.push("/Perfil");
+      const usuario = usuarios.find(usuario => usuario.usu_email === usu_email);
+      const usu_name = `${usuario.usu_name} ${usuario.usu_lastName}`;
+      const fechaNacimiento = new Date(usuario.usu_birthday);
+      const usu_birthday = new Date(Date.now() - fechaNacimiento.getTime()).getFullYear() - 1970;
+      
+      history.push({
+        pathname: "/Perfil",
+        state: { mail: usu_email,
+                 name: usu_name,
+                 birthday: usu_birthday, }
+      });
     }
     else {
       // Si no se encuentra el usuario, establece un mensaje de error
-      setAttemps(attemps -1);
+      setAttemps(attemps - 1);
       setError(`Correo o contraseña incorrectos. Inténtalo de nuevo. Intentos restantes: ${attemps}`);
     }
   };
