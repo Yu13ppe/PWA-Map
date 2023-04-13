@@ -495,6 +495,14 @@ function MapView() {
             </Popup>
           </Marker>
         ))}
+        {line.map((linea) => (
+          <Marker position={[linea.lin_exit_point, linea.lin_arrival_point]} icon={IconLocation2}>
+            <Popup>
+              {linea.lin_name}
+              <FontAwesomeIcon icon={faBus} />
+            </Popup>
+          </Marker>
+        ))}
 
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
