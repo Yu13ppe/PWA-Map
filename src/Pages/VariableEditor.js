@@ -4,7 +4,6 @@ import { Button } from 'reactstrap'
 import { Link } from "react-router-dom";
 
 const VariableEditor = () => {
-
     return (
         <div className="editor-container">
             <Accordion defaultValue="customization">
