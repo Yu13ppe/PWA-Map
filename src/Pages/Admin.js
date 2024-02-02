@@ -1,46 +1,51 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
 import { useHistory } from "react-router-dom";
+import { useDataContext } from '../Context/dataContext';
 
 function Admin() {
   const history = useHistory();
-  const [usu_email, setEmail] = useState('');
-  const [usu_password, setPassword] = useState('');
-  const [usuarios, setUsuarios] = useState([]);
+  const [adm_email, setEmail] = useState('');
+  const [adm_password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [attemps, setAttemps] = useState(3);
+  const { setLogged, setAccessAdminToken, url } = useDataContext();
+  const [tkn, setTkn] = useState('');
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = async (email, password) => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
-      setUsuarios(response.data);
-
+      const response = await axios.get(`${url}/Auth/loginAdmin/${email}/${password}`);
+      setAccessAdminToken(response.data.data);
+      const response2 = await axios.get(`${url}/Auth/findByTokenAdmin/${response.data.data.access_token}`);
+      setTkn(response2.data);
+      setLogged(true);
+      history.push({
+        pathname: "/VariableEditor",
+        state: {
+          user: tkn,
+        }
+      });
     } catch (error) {
-      console.log(error);
+      throw new Error("Inicio de sesión fallido");
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Previene el comportamiento predeterminado del formulario
-    const user = usuarios.find((user) => user.usu_email === usu_email && user.usu_password === usu_password && user.usu_rol === "Administrador");
-
-    if (attemps === 0) {
-      setError("Has superado el número de intentos. Intenta más tarde.");
-    }
-    else if (user) {
-      // Si se encuentra el usuario, cambia de ventana
-      history.push("/VariableEditor");
-    }
-    else {
-      // Si no se encuentra el usuario, establece un mensaje de error
-      setAttemps(attemps - 1);
-      setError(`Correo o contraseña incorrectos. Inténtalo de nuevo. Intentos restantes: ${attemps}`);
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+  
+    try {
+      await fetchData(adm_email, adm_password);
+ 
+    } catch (error) {
+      if (attemps === 0) {
+        setError("Has superado el número de intentos. Intenta más tarde.");
+      } else {
+        setAttemps(attemps - 1);
+        const errorMessage = `Correo o contraseña incorrectos. Inténtalo de nuevo. Intentos restantes: ${attemps}`;
+        setError(errorMessage);
+      }
     }
   };
 
@@ -60,7 +65,7 @@ function Admin() {
             <Input
               className='containerCorreo'
               type="email"
-              value={usu_email}
+              value={adm_email}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
               id="exampleEmail"
@@ -75,7 +80,7 @@ function Admin() {
               name="password"
               placeholder="Introduzca su contraseña"
               type="password"
-              value={usu_password}
+              value={adm_password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <h3 className='olvidarContraseña'>

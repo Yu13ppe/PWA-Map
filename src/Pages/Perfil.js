@@ -1,57 +1,68 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios';
 import { Container, Row, Col, Button, Card, CardBody, CardHeader, CardFooter, CardTitle, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
 import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { useDataContext } from '../Context/dataContext';
 
 function NonStrictModal(props) {
   return (
-      <Modal {...props}>
-          {props.children}
-      </Modal>
+    <Modal {...props}>
+      {props.children}
+    </Modal>
   );
 }
 
 function Perfil() {
-  const location = useLocation();
   const [like, setLike] = useState(false);
   const [modal, setModal] = useState(false);
   const [show, setShow] = useState(false);
   const toggle = () => setModal(!modal);
   const [selectedName, setSelectedName] = useState('');
   const [lineList, setListLine] = useState([]);
+  const [user, setUser] = useState([]);
   const [com_idUser, setCom_idUser] = useState('');
   const [com_idLine, setCom_idLine] = useState('');
   const [com_comment, setCom_comment] = useState('');
+  const { url, accessToken } = useDataContext();
 
   const handleShow = (name) => {
     setShow(true);
     setSelectedName(name);
-};
+  };
 
-const handleClose = () => {
+  const handleClose = () => {
     setShow(false);
-};
+  };
 
-  useEffect(() => {
-    fetchListData();
-  }, []);
-
-  const fetchListData = async () => {
+  const fetchListData = useCallback(async () => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Line');
+      const response = await axios.get(`${url}/Line`);
       setListLine(response.data);
 
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [url]);
+
+  const fetchDataUser = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/Auth/findByToken/${accessToken.access_token}`);
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setUser, accessToken, url]);
+
+  useEffect(() => {
+    fetchListData();
+    fetchDataUser();
+  }, [fetchListData, fetchDataUser]);
 
   const handleSubmit = async event => {
     event.preventDefault();
     try {
       await axios.post(
-        'https://infotpm-backend-production.up.railway.app/comment/create',
+        `${url}/comment/create`,
         {
           com_comment,
           com_idUser,
@@ -82,15 +93,12 @@ const handleClose = () => {
 
       <div className='containerNombre'>
         <h2 className='nombreCuenta'>
-          { location.state?.name || '' }
+          { user.usu_name? user.usu_name : '' } {user.usu_lastName? user.usu_lastName : ''}
           <div className='rayaTituloP' />
         </h2>
-        
+
         <p className='CorreoElectronico'>
-        { location.state?.mail || '' }
-        </p>
-        <p className='numeroUsuario'>
-        { location.state?.birthday || '' } Años
+          {user.usu_email ? user.usu_email: ''}
         </p>
       </div>
       <div className='containerBody'>

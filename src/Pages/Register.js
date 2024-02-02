@@ -1,175 +1,153 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import { Label, Input } from 'reactstrap';
-import { useHistory } from "react-router-dom";
-import DatePicker from 'react-datepicker';
+import { useHistory, Redirect } from "react-router-dom";
 import 'react-datepicker/dist/react-datepicker.css';
+import { useDataContext } from '../Context/dataContext';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Register() {
   const history = useHistory();
   const [usu_name, setName] = useState('');
   const [usu_lastName, setLastname] = useState('');
-  const [usu_birthday, setFdn] = useState('');
   const [usu_email, setEmail] = useState('');
   const [usu_password, setPassword] = useState('');
-  const [usuarios, setUsuarios] = useState([]);
-  const usu_rol = 'Usuario';
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
-      setUsuarios(response.data);
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const { logged, url } = useDataContext();
 
   const handleSubmit = async event => {
     event.preventDefault();
-    const user = usuarios.find((user) => user.usu_email === usu_email);
 
-    if (user) {
-      alert('El correo ya existe');
-      return;
-    }
     try {
       await axios.post(
-        'https://infotpm-backend-production.up.railway.app/Users/create',
+        `${url}/Auth/register`,
         {
           usu_name,
           usu_lastName,
           usu_email,
-          usu_birthday,
-          usu_password,
-          usu_rol,
+          usu_password
         }
       );
+
+      toast.success('¡Registro exitoso!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
       setName('');
       setLastname('');
-      setFdn('');
       setEmail('');
       setPassword('');
+
       history.push('/Account');
+
     } catch (error) {
-      console.log(error);
+      toast.error(error, {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
-  function handleBirthdayChange(date) {
-    setFdn(date);
-  }
-  
   return (
-    <div>
-      <div className='containerInternoRegistro'>
-        <h1 className='titulo'>
-          Registrar Usuario
-          <div className='rayaTitulo' />
-        </h1>
-        <div className='containerInformacionRegistro'>
-          <form onSubmit={handleSubmit} className='Form'>
-            <div className='FormName'>
-              <div className='Nombre'>
-                <Label className='nombreRegistro' htmlFor="exampleName">
-                  Nombre
-                </Label>
-                <Input
-                  className='inputNombreRegistro'
-                  type="text"
-                  name="Name"
-                  defaultValue={usu_name}
-                  onChange={event => setName(event.target.value)}
-                  id="exampleName"
-                  placeholder="Introduzca su Nombre..."
-                  pattern="^[A-ZÑa-zñ]+$"
-                  maxLength="48"
-                  required
-                />
+    logged ? (
+      <Redirect to="/Perfil" />
+    ) :
+      <div>
+        <div className='containerInternoRegistro'>
+          <h1 className='titulo'>
+            Registrar Usuario
+            <div className='rayaTitulo' />
+          </h1>
+          <div className='containerInformacionRegistro'>
+            <form onSubmit={handleSubmit} className='Form'>
+              <div className='FormName'>
+                <div className='Nombre'>
+                  <Label className='nombreRegistro' htmlFor="exampleName">
+                    Nombre
+                  </Label>
+                  <Input
+                    className='inputNombreRegistro'
+                    type="text"
+                    name="Name"
+                    defaultValue={usu_name}
+                    onChange={event => setName(event.target.value)}
+                    id="exampleName"
+                    placeholder="Introduzca su Nombre..."
+                    pattern="^[A-ZÑa-zñ]+$"
+                    maxLength="48"
+                    required
+                  />
+                </div>
+                <div className='Apellido'>
+                  <Label className='apellidoRegistro' htmlFor="exampleApellido">
+                    Apellido
+                  </Label>
+                  <Input
+                    className='inputApellidoRegistro'
+                    type="text"
+                    name="Apellido"
+                    defaultValue={usu_lastName}
+                    onChange={event => setLastname(event.target.value)}
+                    id="exampleApellido"
+                    placeholder="Introduzca su Apellido..."
+                    pattern="^[A-ZÑa-zñ]+$"
+                    maxLength="48"
+                    required
+                  />
+                </div>
               </div>
-              <div className='Apellido'>
-                <Label className='apellidoRegistro' htmlFor="exampleApellido">
-                  Apellido
-                </Label>
-                <Input
-                  className='inputApellidoRegistro'
-                  type="text"
-                  name="Apellido"
-                  defaultValue={usu_lastName}
-                  onChange={event => setLastname(event.target.value)}
-                  id="exampleApellido"
-                  placeholder="Introduzca su Apellido..."
-                  pattern="^[A-ZÑa-zñ]+$"
-                  maxLength="48"
-                  required
-                />
+              <Label className='correoRegistro' htmlFor="exampleEmail">
+                Email
+              </Label>
+              <Input
+                className='inputCorreoRegistro'
+                type="email"
+                name="email"
+                defaultValue={usu_email}
+                onChange={event => setEmail(event.target.value)}
+                id="exampleEmail"
+                placeholder="Introduzca su correo..."
+                required
+              />
+
+              <Label className='contrasenaRegistro' htmlFor="examplePassword">
+                Password
+              </Label>
+              <Input
+                className='inputContrasenaRegistro'
+                id="examplePassword"
+                name="password"
+                defaultValue={usu_password}
+                onChange={event => setPassword(event.target.value)}
+                placeholder="password"
+                type="password"
+                required
+              />
+
+              <div className='RegisterButtons'>
+                <Link to="/Account"><button className='botonVolverRegistro btnRegister'>Volver</button></Link>
+                <button
+                  className='botonRegistrarseRegistro btnRegister'
+                  type='submit'>
+                  Registrarse
+                </button>
               </div>
-            </div>
-            <Label className='correoRegistro' htmlFor="exampleEmail">
-              Email
-            </Label>
-            <Input
-              className='inputCorreoRegistro'
-              type="email"
-              name="email"
-              defaultValue={usu_email}
-              onChange={event => setEmail(event.target.value)}
-              id="exampleEmail"
-              placeholder="Introduzca su correo..."
-              required
-            />
-
-            <Label className='contrasenaRegistro' htmlFor="examplePassword">
-              Password
-            </Label>
-            <Input
-              className='inputContrasenaRegistro'
-              id="examplePassword"
-              name="password"
-              defaultValue={usu_password}
-              onChange={event => setPassword(event.target.value)}
-              placeholder="password"
-              type="password"
-              required
-            />
-
-            <Label className='nacimientoRegistro' htmlFor="exampleDate">
-              Fecha de Nacimiento
-            </Label>
-            <DatePicker
-              selected={usu_birthday}
-              dateFormat="dd/MM/yyyy"
-              maxDate={new Date("2012-01-01")}
-              showYearDropdown
-              scrollableYearDropdown
-              yearDropdownItemNumber={70}
-              className='form-control'
-              id="exampleDate"
-              name="date"
-              defaultValue={usu_birthday}
-              onChange={handleBirthdayChange}
-              type="date"
-              placeholderText='dd/MM/yyyy'
-              required
-            />
-
-            <div className='RegisterButtons'>
-              <Link to="/Account"><button className='botonVolverRegistro btnRegister'>Volver</button></Link>
-              <button
-                className='botonRegistrarseRegistro btnRegister'
-                onClick={() => { handleSubmit() }}>
-                Registrarse
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
+          <ToastContainer />
         </div>
       </div>
-    </div>
   )
 }
 

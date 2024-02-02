@@ -1,26 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { useDataContext } from '../Context/dataContext';
 
 function Users() {
   const [usu_name, setName] = useState('');
   const [usu_lastName, setLastname] = useState('');
-  const [usu_birthday, setFdn] = useState('');
   const [usu_email, setEmail] = useState('');
   const [usu_password, setPassword] = useState('');
-  const [usu_rol, setRol] = useState('');
   const [usuarios, setUsuarios] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [modal, setModal] = useState(false);
+  const { url } = useDataContext();;
   const toggle = () => {
     setModal(!modal)
     if (modal === false) {
       setName('')
       setLastname('')
-      setFdn('')
       setEmail('')
       setPassword('')
-      setRol('')
     }
   };
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,19 +32,20 @@ function Users() {
     setSearchQuery(event.target.value);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Users');
+      const response = await axios.get(`${url}/Users`);
       setUsuarios(response.data);
-
+      
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [url]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleEdit = user => {
     setSelectedUser(user);
@@ -54,10 +53,8 @@ function Users() {
 
     setName(user.usu_name);
     setLastname(user.usu_lastName);
-    setFdn(user.usu_birthday);
     setEmail(user.usu_email);
     setPassword(user.usu_password);
-    setRol(user.usu_rol);
   };
 
   const handleSubmit = async event => {
@@ -66,36 +63,29 @@ function Users() {
     try {
       if (selectedUser) {
         await axios.put(
-          `https://infotpm-backend-production.up.railway.app/Users/${selectedUser.usu_id}`,
+          `${url}/Users/${selectedUser.usu_id}`,
           {
             usu_name,
             usu_lastName,
-            usu_email,
-            usu_birthday,
-            usu_password,
-            usu_rol
+            usu_email
           });
         setSelectedUser(null);
 
       } else {
         await axios.post(
-          'https://infotpm-backend-production.up.railway.app/Users/create',
+          `${url}/Auth/register`,
           {
             usu_name,
             usu_lastName,
             usu_email,
-            usu_birthday,
-            usu_password,
-            usu_rol
+            usu_password
           });
       }
 
       setName('');
       setLastname('');
-      setFdn('');
       setEmail('');
       setPassword('');
-      setRol('');
       fetchData();
       toggle();
     } catch (error) {
@@ -106,7 +96,7 @@ function Users() {
   const handleDelete = async id => {
     try {
       await axios.delete(
-        `https://infotpm-backend-production.up.railway.app/Users/${id}`
+        `${url}/Users/${id}`
       );
       fetchData();
     } catch (error) {
@@ -148,8 +138,6 @@ function Users() {
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Correo</th>
-                <th>Fecha de Nacimiento</th>
-                <th>Cargo</th>
                 <th>Funciones</th>
               </tr>
             </thead>
@@ -160,8 +148,6 @@ function Users() {
                   <td>{user.usu_name}</td>
                   <td>{user.usu_lastName}</td>
                   <td>{user.usu_email}</td>
-                  <td>{user.usu_birthday}</td>
-                  <td>{user.usu_rol}</td>
                   <td>
                     <button
                       className="btn btn-danger"
@@ -215,23 +201,6 @@ function Users() {
             </div>
             <div className="col-md-6">
               <label className="form-label">
-                Fecha de Nacimiento:
-              </label>
-              <Input
-                className='form-control'
-                id="exampleDate"
-                name="date"
-                defaultValue={usu_birthday}
-                onChange={event => setFdn(event.target.value)}
-                min="1941-01-01"
-                max="2011-12-31"
-                type="date"
-                placeholderText='dd/MM/yyyy'
-                required
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">
                 Correo:
               </label>
               <Input
@@ -255,33 +224,6 @@ function Users() {
                 id="contraseña"
                 required
               />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">
-                Cargo:
-              </label>
-              <div>
-                <Input
-                  type="radio"
-                  id="Usuario"
-                  value="Usuario"
-                  checked={usu_rol === 'Usuario'}
-                  onChange={event => setRol(event.target.value)}
-                  name="Usuario"
-                />
-                <label>Usuario</label>
-              </div>
-              <div>
-                <Input
-                  type="radio"
-                  id="Admin"
-                  name="Admin"
-                  value="Administrador"
-                  checked={usu_rol === 'Administrador'}
-                  onChange={event => setRol(event.target.value)}
-                ></Input>
-                <label>Admin</label>
-              </div>
             </div>
           </form>
         </ModalBody>

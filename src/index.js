@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './Assets/Index.scss';
 import App from './App';
+import { DataContextProvider } from './Context/dataContext';
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <DataContextProvider>
+      <App />
+    </DataContextProvider>
   </React.StrictMode>
 );
 

@@ -1,8 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { Button, 
+  Table, 
+  Modal, 
+  ModalHeader, 
+  ModalBody, 
+  ModalFooter, 
+  Input 
+} from 'reactstrap';
+import { useDataContext } from '../Context/dataContext';
 
 function LinesEdit() {
+  const { url } = useDataContext();
   const [lin_name, setName] = useState('');
   const [lin_start, setStart] = useState('');
   const [lin_close, setClose] = useState('');
@@ -35,20 +44,21 @@ function LinesEdit() {
     setSearchQuery(event.target.value);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Line');
+      const response = await axios.get(`${url}/Line`);
       setLine(response.data);
-
+      
     } catch (error) {
       console.log(error);
     }
-  };
-
+  }, [url]);
+  
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+  
   const handleEdit = line => {
     setSelectedLine(line);
     toggle();
@@ -63,7 +73,7 @@ function LinesEdit() {
 
   const handleDelete = async id => {
     try {
-      await axios.delete(`https://infotpm-backend-production.up.railway.app/Line/${id}`);
+      await axios.delete(`${url}/Line/${id}`);
       fetchData();
     } catch (error) {
       console.log(error);
@@ -73,7 +83,7 @@ function LinesEdit() {
   const handleSave = async () => {
     try {
       if (selectedLine) {
-        await axios.put(`https://infotpm-backend-production.up.railway.app/Line/${selectedLine.lin_id}`, {
+        await axios.put(`${url}/Line/${selectedLine.lin_id}`, {
           lin_name,
           lin_start,
           lin_close,
@@ -82,7 +92,7 @@ function LinesEdit() {
           lin_price,
         });
       } else {
-        await axios.post('https://infotpm-backend-production.up.railway.app/line/create', {
+        await axios.post(`${url}/line/create`, {
           lin_name,
           lin_start,
           lin_close,

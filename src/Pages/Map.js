@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import {
   MapContainer,
   TileLayer,
@@ -13,37 +13,37 @@ import { IconLocation } from "../Components/IconLocation";
 import { IconLocation2 } from "../Components/IconLocation2";
 import { faBus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useDataContext } from '../Context/dataContext';
 
 function MapView() {
+  const { url } = useDataContext();
   const position = [10.693, -71.634]
   const [paradas, setParadas] = useState([]);
   const [line, setLine] = useState([]);
 
-  useEffect(() => {
-    fetchData();
-    fetchLineData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Stops');
+      const response = await axios.get(`${url}/Stops`);
       setParadas(response.data);
-
     } catch (error) {
       console.log(error);
     }
-  };
+  },[url]);
 
-  const fetchLineData = async () => {
+  const fetchLineData = useCallback(async () => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/line');
+      const response = await axios.get(`${url}/line`);
       setLine(response.data);
 
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [url]);
 
+  useEffect(() => {
+    fetchData();
+    fetchLineData();
+  }, [fetchData, fetchLineData]);
 
   const Guajira = [
     [

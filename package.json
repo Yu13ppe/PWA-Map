@@ -28,6 +28,7 @@
     "react-leaflet": "^4.2.0",
     "react-router-dom": "5",
     "react-scripts": "5.0.1",
+    "react-toastify": "^10.0.4",
     "reactstrap": "^9.1.6",
     "sass": "^1.57.1",
     "stream-browserify": "^3.0.0",
