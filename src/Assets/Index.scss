@@ -19,6 +19,8 @@
 
 body{
     font-family: 'Noto Sans','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #0A4333;
+    background-image: url('../Assets/Images/Mcbo-bg.png');
+    background-size: cover;
+    background-attachment: fixed;
     overflow-x: hidden;
 }

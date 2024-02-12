@@ -32,7 +32,6 @@ function Users() {
     setSearchQuery(event.target.value);
   };
 
-  
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(`${url}/Users`);
@@ -131,7 +130,7 @@ function Users() {
         </div>
 
         <div className="row m-4 userTable">
-          <Table bordered responsive className='userTable'>
+          <Table bordered responsive striped className='userTable'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -143,8 +142,8 @@ function Users() {
             </thead>
             <tbody>
               {filteredUsuarios.map((user, id) => (
-                <tr key={id}>
-                  <td>{user.usu_id}</td>
+                <tr key={user.usu_id}>
+                  <td>{id + 1}</td>
                   <td>{user.usu_name}</td>
                   <td>{user.usu_lastName}</td>
                   <td>{user.usu_email}</td>

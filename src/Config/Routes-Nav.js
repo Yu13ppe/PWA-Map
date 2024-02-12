@@ -38,7 +38,7 @@ const routes = [
       title: 'Mapa',
       path: '/',
       component: MapView,
-      visibility: true
+      visibility: false
     },
   ];
   

@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter, Input } from 'reactstrap';
+import { useDataContext } from '../Context/dataContext';
 
 function StopsEdit() {
+  const { url } = useDataContext();
   const [par_name, setName] = useState('');
   const [par_lat, setLat] = useState('');
   const [par_long, setLong] = useState('');
@@ -30,19 +32,20 @@ function StopsEdit() {
     setSearchQuery(event.target.value);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  
+  const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get('https://infotpm-backend-production.up.railway.app/Stops');
+      const response = await axios.get(`${url}/Stops`);
       setStops(response.data);
-
+      
     } catch (error) {
       console.log(error);
     }
-  };
+  },[url]);
+  
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleEdit = stop => {
     setSelectedStop(stop);
@@ -56,7 +59,7 @@ function StopsEdit() {
 
   const handleDelete = async id => {
     try {
-      await axios.delete(`https://infotpm-backend-production.up.railway.app/Stops/${id}`);
+      await axios.delete(`${url}/Stops/${id}`);
       fetchData();
     } catch (error) {
       console.log(error);
@@ -66,14 +69,14 @@ function StopsEdit() {
   const handleSave = async () => {
     try {
       if (selectedStop) {
-        await axios.put(`https://infotpm-backend-production.up.railway.app/Stops/${selectedStop.par_id}`, {
+        await axios.put(`${url}/Stops/${selectedStop.par_id}`, {
           par_name,
           par_lat,
           par_long,
           par_description
         });
       } else {
-        await axios.post('https://infotpm-backend-production.up.railway.app/Stops/create', {
+        await axios.post(`${url}/Stops/create`, {
           par_name,
           par_lat,
           par_long,
@@ -131,9 +134,9 @@ function StopsEdit() {
                 </tr>
               </thead>
               <tbody>
-                {filteredStops.map(stop => (
+                {filteredStops.map((stop, index) => (
                   <tr key={stop.par_id}>
-                    <td>{stop.par_id}</td>
+                    <td>{index +  1}</td>
                     <td>{stop.par_name}</td>
                     <td>{stop.par_lat}</td>
                     <td>{stop.par_long}</td>
