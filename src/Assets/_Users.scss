@@ -41,10 +41,13 @@
         margin-top: 1em;
     }
 
-    .userTable td{
-        color: #FFFFFF;
-        background-color: #0A4333;
+    Table{
+        text-align: center;
+    }
 
+    .userTable td{
+        color: #000000;
+        background-color: #FFFFFF;
         .btn{
             margin: 1em 0.5em;
         }

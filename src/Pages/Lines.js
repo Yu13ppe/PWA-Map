@@ -16,7 +16,8 @@ import {
   ModalFooter,
   Input
 } from 'reactstrap';
-import { FaRegHeart, FaHeart, FaRegCommentDots } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegCommentDots, FaEyeSlash  } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
 import { useDataContext } from '../Context/dataContext';
 
 function NonStrictModal(props) {
@@ -30,6 +31,7 @@ function NonStrictModal(props) {
 function Lines() {
   const { url } = useDataContext();
   const [like, setLike] = useState(false);
+  const [visibility, setVisibility] = useState(false);
   const [modal, setModal] = useState(false);
   const [show, setShow] = useState(false);
   const [lineList, setListLine] = useState([]);
@@ -51,6 +53,10 @@ function Lines() {
 
   const handleLike = () => {
     setLike(!like);
+  }
+
+  const handleVisibility = () => {
+    setVisibility(!visibility);
   }
 
   const fetchData = useCallback(async () => {
@@ -111,6 +117,15 @@ function Lines() {
                   </NonStrictModal>
 
                   <div className='lineButtons'>
+                    <Button className="btn" type="button">
+                      {
+                        visibility ? (
+                          <FaEyeSlash className="icon" onClick={handleVisibility} />
+                        ) : (
+                          <IoEyeSharp className="icon" onClick={handleVisibility} />
+                        )
+                      }
+                    </Button>
                     <Button className="btn" type="button">
                       {
                         like ? (
