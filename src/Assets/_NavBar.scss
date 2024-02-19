@@ -60,7 +60,7 @@
 // }
 
 .navbar {
-  background-color: #13684B;
+  background-color: #13684b;
   color: #fff;
   padding: 10px;
   display: flex;
@@ -87,13 +87,15 @@
   }
 
   .desplegable {
-    background-color: #0A4333;
+    background-color: #0a4333;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    width: 40%;
-    margin-left: 10em;
+    margin-left: 45vw;
+    margin-right: -25px;
+    margin-bottom: -10px;
+    width: 100%;
 
     .buttons {
-      color: #DFDFDF;
+      color: #dfdfdf;
       font-family: Segoe UI;
       font-weight: 400;
       font-size: 18px;
@@ -106,24 +108,72 @@
 
       .btn {
         margin-top: 10px;
-        color: #DFDFDF;
-        width: 97%;
-        border-bottom: 1px solid #E5C034;
-        padding: 5px 5px;
+        color: #dfdfdf;
+        width: 48vw;
+        border-bottom: 1px solid #e5c034;
+
+        padding: 5px 10px;
         text-align: start;
 
         &:hover {
           background-color: #052111;
-          color: #DFDFDF;
+          color: #dfdfdf;
+        }
+      }
+      @media screen and (max-width: 1000px) {
+        .btn {
+          margin-top: 10px;
+          color: #dfdfdf;
+          width: 46vw;
+          border-bottom: 1px solid #e5c034;
+          padding: 5px 10px;
+          text-align: start;
+        }
+      }
+      @media screen and (max-width: 800px) {
+        .btn {
+          margin-top: 10px;
+          color: #dfdfdf;
+          width: 45vw;
+          border-bottom: 1px solid #e5c034;
+          padding: 5px 10px;
+          text-align: start;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        .btn {
+          margin-top: 10px;
+          color: #dfdfdf;
+          width: 25vw;
+          border-bottom: 1px solid #e5c034;
+          padding: 5px 10px;
+          text-align: start;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        .btn {
+          margin-top: 10px;
+          color: #dfdfdf;
+          width: 21vw;
+          border-bottom: 1px solid #e5c034;
+          padding: 5px 10px;
+          text-align: start;
         }
       }
     }
   }
+
+  @media screen and (max-width: 600px) {
+    .desplegable {
+      background-color: #0a4333;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      margin-left: 60vw;
+      margin-right: -25px;
+      margin-bottom: -10px;
+      width: 100%;
+    }
+  }
 }
-
-
-
-
 
 // @media screen and (max-width: 300px) {
 //     .Collapse{
