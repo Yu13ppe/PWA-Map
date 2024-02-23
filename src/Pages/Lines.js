@@ -16,7 +16,7 @@ import {
   ModalFooter,
   Input
 } from 'reactstrap';
-import { FaRegHeart, FaHeart, FaRegCommentDots, FaEyeSlash  } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaRegCommentDots, FaEyeSlash } from "react-icons/fa";
 import { IoEyeSharp } from "react-icons/io5";
 import { useDataContext } from '../Context/dataContext';
 
@@ -29,12 +29,13 @@ function NonStrictModal(props) {
 }
 
 function Lines() {
-  const { url } = useDataContext();
-  const [like, setLike] = useState(false);
+  const { url, accessToken } = useDataContext();
+  const [likes, setLikes] = useState({});
   const [visibility, setVisibility] = useState(false);
   const [modal, setModal] = useState(false);
   const [show, setShow] = useState(false);
   const [lineList, setListLine] = useState([]);
+  const [user, setUser] = useState([]);
   const [selectedName, setSelectedName] = useState('');
   const [com_idUser, setCom_idUser] = useState('');
   const [com_idLine, setCom_idLine] = useState('');
@@ -51,9 +52,14 @@ function Lines() {
 
   const toggle = () => setModal(!modal);
 
-  const handleLike = () => {
-    setLike(!like);
-  }
+  const fetchDataUser = useCallback(async () => {
+    try {
+      const response = await axios.get(`${url}/Auth/findByToken/${accessToken.access_token}`);
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [accessToken, url]);
 
   const handleVisibility = () => {
     setVisibility(!visibility);
@@ -71,7 +77,8 @@ function Lines() {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+    fetchDataUser();
+  }, [fetchData, fetchDataUser]);
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -88,6 +95,45 @@ function Lines() {
       setCom_comment('');
       setCom_idUser('');
       setCom_idLine('');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function handleLike(lineId) {
+    // Cambia el estado de 'like'
+    setLikes({
+      ...likes,
+      [lineId]: !likes[lineId]
+    });
+  
+    // Llama a handleSubmitLike con el ID del usuario y el ID de la línea
+    if (!likes[lineId]) {
+      handleSubmitLike(user.usu_id, lineId);
+    } else {
+      handleDeleteLike(user.usu_id, lineId);
+    }
+  }
+
+  const handleSubmitLike = async (userId, lineId) => {
+    try {
+      await axios.post(
+        `${url}/userline/create`,
+        {
+          userId: userId,
+          lineId: lineId
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteLike = async (userId, lineId) => {
+    try {
+      await axios.delete(
+        `${url}/userline/delete/${userId}/${lineId}`
+      );
     } catch (error) {
       console.log(error);
     }
@@ -128,10 +174,10 @@ function Lines() {
                     </Button>
                     <Button className="btn" type="button">
                       {
-                        like ? (
-                          <FaHeart className="icon" onClick={handleLike} />
+                        likes[line.lin_id] ? (
+                          <FaHeart className="icon" onClick={() => handleLike(line.lin_id)} />
                         ) : (
-                          <FaRegHeart className="icon" onClick={handleLike} />
+                          <FaRegHeart className="icon" onClick={() => handleLike(line.lin_id)} />
                         )
                       }
                     </Button>

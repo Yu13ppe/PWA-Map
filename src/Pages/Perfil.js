@@ -51,7 +51,7 @@ function Perfil() {
     } catch (error) {
       console.log(error);
     }
-  }, [setUser, accessToken, url]);
+  }, [accessToken, url]);
 
   useEffect(() => {
     fetchListData();
