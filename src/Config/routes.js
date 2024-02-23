@@ -10,6 +10,9 @@ import { VariableEditor } from '../Pages/VariableEditor';
 import { Users } from '../Pages/Users';
 import { StopsEdit } from '../Pages/StopsEdit';
 import { LinesEdit } from '../Pages/LinesEdit';
+import { Buses } from '../Pages/Buses';
+import { Comments } from '../Pages/Comments';
+
 
 const routes = [
   {
@@ -71,6 +74,16 @@ const routes = [
     title: 'Perfil',
     path: '/Perfil',
     component: Perfil,
+  },
+  {
+    title: 'Buses',
+    path: '/Buses',
+    component: Buses,
+  },
+  {
+    title: 'Comments',
+    path: '/Comments',
+    component: Comments,
   },
   {
     title: 'Map',

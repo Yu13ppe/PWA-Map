@@ -35,16 +35,16 @@ function StopsEdit() {
     setSearchQuery(event.target.value);
   };
 
-
+  
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get(`${url}/Stops`);
       setStops(response.data);
-
+      
     } catch (error) {
       console.log(error);
     }
-  }, [url]);
+  },[url]);
 
   const fetchLineData = useCallback(async () => {
     try {
@@ -55,7 +55,7 @@ function StopsEdit() {
       console.log(error);
     }
   }, [url]);
-
+  
   useEffect(() => {
     fetchData();
     fetchLineData();
@@ -143,7 +143,7 @@ function StopsEdit() {
             <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>ID</th>
                   <th>Nombre</th>
                   <th>Latitud</th>
                   <th>Longitud</th>
@@ -154,7 +154,7 @@ function StopsEdit() {
               <tbody>
                 {filteredStops.map((stop, index) => (
                   <tr key={stop.par_id}>
-                    <td>{index + 1}</td>
+                    <td>{index +  1}</td>
                     <td>{stop.par_name}</td>
                     <td>{stop.par_lat}</td>
                     <td>{stop.par_long}</td>

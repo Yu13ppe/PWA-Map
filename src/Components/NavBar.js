@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { useDataContext } from '../Context/dataContext'
 import { clearLocalStorage } from '../Hooks/useLocalStorage'
+import { ReactComponent as IconMaker } from '../Assets/Images/map.svg';
 
 function NavBar(props) {
   const { accessAdminToken, accessToken, logged, url } = useDataContext();
@@ -81,7 +82,7 @@ function NavBar(props) {
     <div>
       <Navbar color="faded" light className="navbar">
         <NavbarBrand href="/" className="me-auto">
-          <h1 className="title1">InfoTPM</h1>
+          <h1 className="title1">InfoTPM<IconMaker className="IconMaker"/></h1>
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="botonDesplegable" />
         <Collapse isOpen={!collapsed} navbar className="desplegable">
