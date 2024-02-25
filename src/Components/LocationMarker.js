@@ -11,8 +11,8 @@ function LocationMarker() {
       locationfound(e) {
         setInterval(() => {
           setPosition(e.latlng)
-          console.log(e.latlng)
-      }, 5000);
+          // console.log(e.latlng)
+      }, 20000);
         map.flyTo(e.latlng, map.getZoom())
       },
     })
