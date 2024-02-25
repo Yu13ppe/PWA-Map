@@ -5,27 +5,27 @@ import { useDataContext } from '../Context/dataContext';
 import axios from 'axios';
 
 function LocationTestMarker() {
-  const { url } = useDataContext();
+  const { url, accessToken } = useDataContext();
   const [position, setPosition] = useState(null)
   const [busData, setBusData] = useState([]);
-  // const [user, setUser] = useState([]);
+  const [user, setUser] = useState([]);
   // const [bus_lat, setBusLat] = useState('');
   // const [bus_lon, setBusLon] = useState('');
 
-  // const fetchDataUser = useCallback(async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${url}/Auth/findByToken/${accessToken.access_token}`
-  //     );
-  //     setUser(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [setUser, accessToken, url]);
+  const fetchDataUser = useCallback(async () => {
+    try {
+      const response = await axios.get(
+        `${url}/Auth/findByToken/${accessToken.access_token}`
+      );
+      setUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [setUser, accessToken, url]);
 
   const fetchBusData = useCallback(async () => {
     try {
-      const response = await axios.get(`${url}/Bus/1`);
+      const response = await axios.get(`${url}/Bus/`);
       setBusData(response.data);
     } catch (error) {
       console.log(error);
@@ -34,8 +34,8 @@ function LocationTestMarker() {
 
   useEffect(() => {
     fetchBusData();
-    // fetchDataUser();
-  }, [fetchBusData]);
+    fetchDataUser();
+  }, [fetchBusData, fetchDataUser]);
 
   // const map = useMapEvents({
   //   click() {
@@ -73,27 +73,24 @@ function LocationTestMarker() {
       map.locate();
     },
     locationfound(e) {
-      if (e && e.latlng) {
+      if (busData.user && user.usu_id === busData.user.usu_id && busData.bus_status === 'active' && e && e.latlng) {
         const latlng = e.latlng;
         setInterval(() => {
           setPosition(latlng);
-
-
-
-          axios.put(`${url}/Bus/${1}`, {
+          axios.put(`${url}/Bus/${busData.bus_id}`, {
             bus_lat: latlng.lat,
             bus_lon: latlng.lng,
           });
         }, 5000);
         map.flyTo(latlng, map.getZoom());
       } else {
-        console.log('No se pudo encontrar la ubicación');
+        setPosition(null);
       }
     },
   });
 
   return position === null ? null : (
-    <Marker position={{lat: busData.bus_lat, lng: busData.bus_lon}} icon={IconLocation3}>
+    <Marker position={{ lat: busData.bus_lat, lng: busData.bus_lon }} icon={IconLocation3}>
       <Popup>Bus here</Popup>
     </Marker>
   )
