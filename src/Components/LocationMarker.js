@@ -11,13 +11,13 @@ function LocationMarker() {
     locationfound(e) {
       setPosition(e.latlng)
       // console.log(e.latlng)
-      map.flyTo(e.latlng, map.getZoom())
+      // map.flyTo(e.latlng, map.getZoom())
     },
   })
 
   return position === null ? null : (
     <Marker position={position} icon={IconLocation3}>
-      <Popup>You are here</Popup>
+      <Popup>Estás aquí</Popup>
     </Marker>
   )
 }

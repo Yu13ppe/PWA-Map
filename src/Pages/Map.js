@@ -22,6 +22,7 @@ function MapView() {
   const position = [10.693, -71.634]
   const [paradas, setParadas] = useState([]);
   const [line, setLine] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const fetchData = useCallback(async () => {
     try {
@@ -46,6 +47,15 @@ function MapView() {
     fetchData();
     fetchLineData();
   }, [fetchData, fetchLineData]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRefreshKey(prevKey => prevKey + 1);
+    }, 5000); // 5000 ms = 5 s
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(intervalId);
+  }, []);
 
   const limeOptions = { color: 'lime' }
   const blueOptions = { color: 'blue' }
@@ -86,7 +96,7 @@ function MapView() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <LocationMarker />
-        <LocationTestMarker/>
+        <LocationTestMarker key={refreshKey} />
         <Polyline pathOptions={limeOptions} positions={List.Guajira} />
         <Polyline pathOptions={blueOptions} positions={List.Veritas} />
         <Polyline pathOptions={redOptions} positions={List.Milagro} />

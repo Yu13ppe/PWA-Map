@@ -15,6 +15,7 @@ function StopsEdit() {
   const [lines, setLines] = useState([]);
   const [selectedStop, setSelectedStop] = useState(null);
   const [modal, setModal] = useState(false);
+
   const toggle = () => {
     setModal(!modal)
     if (modal === false) {
@@ -24,6 +25,7 @@ function StopsEdit() {
       setDesc('')
     }
   };
+  console.log(modal);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredStops = stop.filter(stop => {
@@ -143,7 +145,7 @@ function StopsEdit() {
             <Table bordered responsive className='userTable'>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>#</th>
                   <th>Nombre</th>
                   <th>Latitud</th>
                   <th>Longitud</th>

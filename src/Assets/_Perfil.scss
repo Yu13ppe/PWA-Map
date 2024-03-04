@@ -103,24 +103,6 @@
   justify-content: center;
 }
 
-.btnTest:hover {
-  background-color: #0a4333;
-}
-
-.btnTest:focus {
-  background-color: #0a4333;
-}
-
-@media screen and (max-width: 800px) {
-  .iconBusTest {
-    position: relative;
-    width: 5vw;
-  }
-  .btnTest {
-    height: 8vw;
-  }
-}
-
 @media screen and (max-width: 800px) {
   .btnTest {
     position: static;
@@ -148,7 +130,6 @@
   width: 100%;
   margin: auto;
   margin-top: 2em;
-  background-color: #13684b;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 
   .titleRutasF {
