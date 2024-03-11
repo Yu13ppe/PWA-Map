@@ -850,6 +850,41 @@ function Lines() {
                                 )?.coords || []
                               }
                             />
+                            {/* {Array.isArray(line) ? line.map((linea) =>
+                              linea.lin_id === mapStop(SelectedStop).Line.lin_id ? (
+                                <Marker
+                                  position={[mapStop(SelectedStop).Line.lin_exit_point, mapStop(SelectedStop).Line.lin_arrival_point]}
+                                  icon={IconLocation2}
+                                >
+                                  <Popup>
+                                    {linea.lin_name}
+                                    <FontAwesomeIcon icon={faBus} />
+                                  </Popup>
+                                </Marker>
+                              ) : null
+                            ) : null} */}
+                            {mapStop(SelectedStop).Line.lin_id ? (
+                              <Marker
+                                position={[mapStop(SelectedStop).Line.lin_exit_point, mapStop(SelectedStop).Line.lin_arrival_point]}
+                                icon={IconLocation2}
+                              >
+                                <Popup>
+                                  {mapStop(SelectedStop).Line.lin_name}
+                                  <FontAwesomeIcon icon={faBus} />
+                                </Popup>
+                              </Marker>
+                            ) : null}
+                            {mapStop(SelectedStop).Line.lin_id ? (
+                              <Marker
+                                position={[mapStop(SelectedStop).Line.lin_start, mapStop(SelectedStop).Line.lin_close]}
+                                icon={IconLocation2}
+                              >
+                                <Popup>
+                                  {mapStop(SelectedStop).Line.lin_name}
+                                  <FontAwesomeIcon icon={faBus} />
+                                </Popup>
+                              </Marker>
+                            ) : null}
                           </MapContainer>
                         }
                       </ModalBody>
