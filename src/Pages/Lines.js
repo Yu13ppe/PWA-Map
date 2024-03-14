@@ -41,6 +41,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus } from "@fortawesome/free-solid-svg-icons";
 import { List } from "../Components/List";
 import { ReactComponent as IconMaker } from "../Assets/Images/mapPrueba.svg";
+import { ReactComponent as IconArrowDown } from "../Assets/Images/flechaBaja.svg";
+import { ReactComponent as PointRed } from "../Assets/Images/pointRed.svg";
 
 //Usestate
 
@@ -679,12 +681,12 @@ function Lines() {
               <Card className="cardLine">
                 <CardHeader className="card-head">
                   Linea: {index + 1}
-                  <Button>
+                  <Button className="btnArrow">
                     <NavbarToggler
                       onClick={() => toggleNavbar(line.lin_id)}
                       className="stopDesplegable"
                     />
-                    Ver paradas
+                    <IconArrowDown />
                   </Button>
                 </CardHeader>
                 <CardBody className="card-body">
@@ -787,11 +789,13 @@ function Lines() {
                   className="colapseStop mt-"
                 >
                   <CardBody className="card-body cardBodyStop">
-                    <ul>
+                    <ul className="ListStop">
                       {line.stops.map((stop, index) => (
                         <li key={index} className="cardStopInt">
+                            <Button onClick={() => handleShowStop(stop.par_id)} className="btnStop">
+                              <PointRed className="pointMaker"/>
+                            </Button>
                           <div className="cardStopContent">
-                            <Button onClick={() => handleShowStop(stop.par_id)}>s</Button>
                             <h4 className="titleStop"> {stop.par_name}</h4>
                             <p className="descriptionStop">{stop.par_description}</p>
                           </div>
@@ -863,7 +867,7 @@ function Lines() {
                                 </Marker>
                               ) : null
                             ) : null} */}
-                            {mapStop(SelectedStop).Line.lin_id ? (
+                            {mapStop(SelectedStop) ? (
                               <Marker
                                 position={[mapStop(SelectedStop).Line.lin_exit_point, mapStop(SelectedStop).Line.lin_arrival_point]}
                                 icon={IconLocation2}
@@ -874,7 +878,7 @@ function Lines() {
                                 </Popup>
                               </Marker>
                             ) : null}
-                            {mapStop(SelectedStop).Line.lin_id ? (
+                            {mapStop(SelectedStop) ? (
                               <Marker
                                 position={[mapStop(SelectedStop).Line.lin_start, mapStop(SelectedStop).Line.lin_close]}
                                 icon={IconLocation2}
