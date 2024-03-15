@@ -27,7 +27,7 @@ function Register() {
           usu_password,
           usu_role: "user",
         });
-
+        await axios.post(`${url}/Mailer/EmailWelcome/${usu_email}`);
         toast.success("¡Registro exitoso!", {
           position: "bottom-right",
           autoClose: 5000,

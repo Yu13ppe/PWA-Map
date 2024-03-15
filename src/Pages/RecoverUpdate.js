@@ -190,15 +190,15 @@ function RecoverUpdate() {
     <div>
       <div className="containerInternoRegistro">
         <h1 className="titulo">
-          ¿No tienes cuenta aún? {email} <Link to='/Register' id='RegisterA'>¡Regístrate!</Link>
+          Recuperar contraseña
           <div className="rayaTitulo" />
         </h1>
         <div className="containerInformacionRegistro">
           <form onSubmit={handleSubmit} className="Form">
-            <div className="FormName">
+            <div className="FormRecoverPass">
               <div className="Nombre">
-                <Label className="nombreRegistro" htmlFor="exampleName">
-                  Nombre
+                <Label className="namePassword" htmlFor="exampleName">
+                  Contraseña
                 </Label>
                 <Input
                   className="inputNombreRegistro"
@@ -216,9 +216,9 @@ function RecoverUpdate() {
                   </FormFeedback>
                 )}
               </div>
-              <div className="Apellido">
+              <div className="confirmarPass">
                 <Label className="apellidoRegistro" htmlFor="exampleApellido">
-                  Apellido
+                  Confirmar Contraseña
                 </Label>
                 <Input
                   className="inputApellidoRegistro"
@@ -237,8 +237,9 @@ function RecoverUpdate() {
                 )}
               </div>
             </div>
-            <div className="RegisterButtons">
+            <div className="buttonsRecovery">
               <Button
+                className='btnRecovery'
                 type="submit"
                 disabled={usu_password !== use_Confirmpassword || usu_password.length < 8 || email !== userEmail.usu_email || parseInt(id) !== userEmail.usu_id}
                 color='primary'>
