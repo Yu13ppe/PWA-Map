@@ -11,9 +11,9 @@ function Recover() {
   const history = useHistory();
   const [to, setTo] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     try {
-      await axios.post(`${url}/Mailer/emailRecovery/${to}`);
+      axios.post(`${url}/Mailer/emailRecovery/${to}`);
       toast.success('El correo fue enviado con éxito');
       setTo('');
       setTimeout(() => {
