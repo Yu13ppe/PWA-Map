@@ -263,9 +263,9 @@ function Buses() {
                 required
               >
                 <option>Selecciona un conductor</option>
-                {Users.map((user) => (
+                {Users.filter(usu => usu.usu_role === 'Driver').map((user) => (
                   <option key={user.usu_id} value={user.usu_id}>
-                    {user.usu_name}
+                    {user.usu_name} {user.usu_lastName} - {user.usu_email}
                   </option>
                 ))}
               </Input>
