@@ -7,28 +7,28 @@
   "display":"standalone",
   "icons":[
     {
-      "src":"Wolftein-icon-192.png",
+      "src":"iTPM-Mask-192.png",
       "sizes":"192x192",
       "type":"image/png"
     },
     {
-      "src":"Wolftein-icon-384.png",
+      "src":"iTPM-Mask-384.png",
       "sizes":"384x384",
       "type":"image/png"
     },
     {
-      "src":"Wolftein-icon-512.png",
+      "src":"iTPM-Mask-512.png",
       "sizes":"512x512",
       "type":"image/png"
     },
     {
-      "src":"Wolftein-icon-1024.png",
+      "src":"iTPM-Mask-1024.png",
       "sizes":"1024x1024",
       "type":"image/png"
     }
   ],
   "lang":"es",
-  "name":"Info TPM",
+  "name":"info TPM",
   "orientation":"portrait",
   "prefer_related_applications":false,
   "scope":"/",
