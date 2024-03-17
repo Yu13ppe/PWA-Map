@@ -118,7 +118,7 @@ function Register() {
               type="email"
               name="email"
               defaultValue={usu_email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value).toLowerCase()}
               id="exampleEmail"
               placeholder="Introduzca su correo..."
               required
@@ -140,7 +140,7 @@ function Register() {
 
             <div className="RegisterButtons">
               <Link to="/Account">
-                <button className="botonVolverRegistro btnRegister">
+                <button type="button" className="botonVolverRegistro btnRegister">
                   Volver
                 </button>
               </Link>
