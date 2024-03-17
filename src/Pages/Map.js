@@ -64,7 +64,7 @@ function MapView() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setRefreshKey(prevKey => prevKey + 1);
-    }, 2000); // 5000 ms = 5 s
+    }, 15000); // 5000 ms = 5 s
 
     // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(intervalId);
@@ -110,7 +110,7 @@ function MapView() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <LocationMarker key={refreshKey}/>
+        <LocationMarker />
         <LocationTestMarker key={refreshKey} />
         {lines.filter(line => line.hidden === false).map((line) => (
           <Polyline key={refreshKey} pathOptions={{ color: line.color }} positions={line.coords} />
