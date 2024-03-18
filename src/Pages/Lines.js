@@ -73,7 +73,7 @@ function Lines() {
   // const [stop, setStop] = useState(null);
 
   //Funcion para el chqueo y muestra de mapas en los modales
-
+  
   const mapLine = (imgLine) => {
     //Mapa de la Guajira
     if (imgLine === "Guajira") {
@@ -542,15 +542,6 @@ function Lines() {
     }
   }, [url]);
 
-  // const fetchStop = useCallback(async () => {
-  //   try {
-  //     const response = await axios.get(`${url}/stops`);
-  //     setStop(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [url]);
-
   //Renderizacion de las funciones
   useEffect(() => {
     fetchData();
@@ -775,7 +766,7 @@ function Lines() {
                   </div>
                 </CardBody>
                 <CardFooter className="card-footer">
-                  <div className="Horario">Horario: 7am - 8pm</div>
+                  <div className="Horario">Horario: {line.lin_scheduleStart} - {line.lin_scheduleEnd}</div>
                   <div className="Pasaje">Pasaje: {line.lin_price}Bs.</div>
                 </CardFooter>
                 <Collapse

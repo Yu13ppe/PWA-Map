@@ -64,10 +64,6 @@ function LocationTestMarker() {
     map.locate();
   }, [fetchBusData, fetchDataUser, map]);
 
-  const alerta = ()=>{
-    console.log("Esto es un mensaje de alerta");
-  }
-
   return position === null
     ? null
     : busData
@@ -84,7 +80,7 @@ function LocationTestMarker() {
                 <br />
                 Placa: {bus.bus_plate}
                 <br />
-                <Button color="danger" onClick={()=> alerta()}>SOS</Button>
+                <Button color="danger" onClick={()=> alert("Esto es un mensaje de alerta")}>SOS</Button>
               </div>
             </Popup>
           </Marker>
