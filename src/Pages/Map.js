@@ -64,7 +64,7 @@ function MapView() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setRefreshKey(prevKey => prevKey + 1);
-    }, 15000); // 5000 ms = 5 s
+    }, 2000); // 5000 ms = 5 s
 
     // Limpiar el intervalo cuando el componente se desmonte
     return () => clearInterval(intervalId);
